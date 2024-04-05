@@ -25,9 +25,8 @@ public class OrderResponseDto {
     private Integer totalInCents;
     private LocalDate createdAt;
     private OrderStatus orderStatus;
-    private PaymentStatus paymentStatus;
     private List<OrderProductResponseDto> orderProduct = new ArrayList<>();
-    private Payment payment;
+    private PaymentResponseDto payment;
 
     public OrderResponseDto(Order order) {
         List<OrderProductResponseDto> orderProductResponseDtoList = new ArrayList<>();
@@ -38,9 +37,9 @@ public class OrderResponseDto {
         this.orderProduct = orderProductResponseDtoList;
         this.id = order.getId();
         this.orderStatus = order.getOrderStatus();
-        this.paymentStatus = order.getPaymentStatus();
         this.createdAt = order.getCreatedAt();
         this.totalInCents=order.getTotalInCents();
+        this.payment= order.getPayment() !=null ? new PaymentResponseDto(order.getPayment()): null;
 
     }
 }

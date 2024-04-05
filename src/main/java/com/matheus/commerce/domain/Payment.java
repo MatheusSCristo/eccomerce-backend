@@ -1,5 +1,6 @@
 package com.matheus.commerce.domain;
 
+import com.matheus.commerce.dto.PaymentDto;
 import com.matheus.commerce.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,13 @@ public class Payment {
     private String id;
     @OneToOne(mappedBy = "payment")
     private Order order;
-    private PaymentStatus paymentStatus;
+    @Column(name = "payment_status", length = 255)
+    private PaymentStatus paymentStatus=PaymentStatus.pending;
+    public Payment(Order order){
+        this.order=order;
+    }
 
+    public Payment(PaymentDto paymentDto) {
 
-
+    }
 }

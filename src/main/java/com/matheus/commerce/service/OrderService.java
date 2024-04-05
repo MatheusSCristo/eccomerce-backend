@@ -11,10 +11,7 @@ import com.matheus.commerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -36,7 +33,7 @@ public class OrderService {
     public void create(OrderDto orderDto) {
         Order order = new Order();
         orderRepository.save(order);
-        List<OrderProduct> orderProductList=new ArrayList<>();
+        Set<OrderProduct> orderProductList = new HashSet<>();
         for (OrderProductDto orderProductDto : orderDto.orderProductDto()) {
             Optional<Product> optionalProduct = productRepository.findById(orderProductDto.productId());
             if (optionalProduct.isPresent()) {
@@ -46,15 +43,45 @@ public class OrderService {
                 orderProductList.add(orderProduct);
             }
         }
-         order.setTotalInCents(calculateTotalInCents(orderProductList));
+        order.setTotalInCents(calculateTotalInCents(orderProductList));
         orderRepository.save(order);
     }
 
-    private Integer calculateTotalInCents(List<OrderProduct> list) {
+    private Integer calculateTotalInCents(Set<OrderProduct> list) {
         Integer sum = 0;
         for (OrderProduct orderProduct : list) {
             sum += orderProduct.getSubtotalInCents();
         }
         return sum;
+    }
+
+    public void update(OrderDto orderDto, String id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            Set<OrderProduct> orderProductList = order.getOrderProduct();
+            for (OrderProductDto orderProductDto : orderDto.orderProductDto()) {
+                Optional<Product> optionalProduct = productRepository.findById(orderProductDto.productId());
+                if (optionalProduct.isPresent()) {
+                    Product product = optionalProduct.get();
+                    Optional<OrderProduct> orderProductOptional = orderProductRepository.findByProduct(product);
+                    if (orderProductOptional.isPresent()) {
+                        OrderProduct tempOrderProduct = orderProductOptional.get();
+                        tempOrderProduct.setQuantity(tempOrderProduct.getQuantity() + orderProductDto.quantity());
+                        tempOrderProduct.setSubtotalInCents(tempOrderProduct.getProduct().getPriceInCents() * tempOrderProduct.getQuantity());
+                        orderProductRepository.save(tempOrderProduct);
+
+                    } else {
+                        OrderProduct orderProduct = new OrderProduct(orderProductDto, product, order);
+                        orderProductRepository.save(orderProduct);
+                        orderProductList.add(orderProduct);
+                    }
+                }
+                order.setTotalInCents(calculateTotalInCents(orderProductList));
+                order.setOrderProduct(orderProductList);
+                orderRepository.save(order);
+            }
+        }
+
     }
 }

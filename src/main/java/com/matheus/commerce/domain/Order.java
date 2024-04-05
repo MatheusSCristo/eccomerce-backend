@@ -31,9 +31,6 @@ public class Order {
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus=OrderStatus.preparing;
-    @Column(name = "payment_status")
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus=PaymentStatus.pending;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderProduct> orderProduct = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

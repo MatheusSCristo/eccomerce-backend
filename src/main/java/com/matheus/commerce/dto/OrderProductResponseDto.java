@@ -11,11 +11,13 @@ public class OrderProductResponseDto {
     private String productId;
     private Integer quantity;
     private Integer subtotalInCents;
+    private String imageUrl;
 
-    public OrderProductResponseDto(OrderProduct orderProduct){
-        this.id= orderProduct.getId();
-        this.productId=orderProduct.getProduct().getId();
-        this.subtotalInCents=orderProduct.getSubtotalInCents();
-        this.quantity=orderProduct.getQuantity();
+    public OrderProductResponseDto(OrderProduct orderProduct) {
+        this.id = orderProduct.getId();
+        this.productId = orderProduct.getProduct().getId();
+        this.subtotalInCents = orderProduct.getSubtotalInCents();
+        this.quantity = orderProduct.getQuantity();
+        this.imageUrl = orderProduct.getImageUrl();
     }
 }

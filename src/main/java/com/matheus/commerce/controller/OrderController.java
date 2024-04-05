@@ -5,6 +5,7 @@ import com.matheus.commerce.dto.OrderDto;
 import com.matheus.commerce.dto.OrderResponseDto;
 import com.matheus.commerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,13 @@ public class OrderController {
             orderResponseDtoList.add(orderResponseDto);
         }
         return ResponseEntity.ok().body(orderResponseDtoList);
+    }
+
+    @PutMapping( value = "{id}")
+    public ResponseEntity<Void> update(@RequestBody OrderDto orderDto,@PathVariable String id){
+        orderService.update(orderDto,id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
 
