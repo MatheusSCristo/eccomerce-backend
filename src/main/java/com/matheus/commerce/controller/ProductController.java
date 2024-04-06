@@ -1,14 +1,13 @@
 package com.matheus.commerce.controller;
 
 import com.matheus.commerce.domain.Product;
-import com.matheus.commerce.dto.ProductDto;
-import com.matheus.commerce.dto.ProductResponseDto;
+import com.matheus.commerce.dto.product.ProductDto;
+import com.matheus.commerce.dto.product.ProductResponseDto;
 import com.matheus.commerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

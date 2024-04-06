@@ -1,9 +1,6 @@
 package com.matheus.commerce.domain;
 
-import com.matheus.commerce.dto.OrderDto;
-import com.matheus.commerce.dto.OrderProductDto;
 import com.matheus.commerce.enums.OrderStatus;
-import com.matheus.commerce.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

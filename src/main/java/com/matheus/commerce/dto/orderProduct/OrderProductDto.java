@@ -1,4 +1,4 @@
-package com.matheus.commerce.dto;
+package com.matheus.commerce.dto.orderProduct;
 
 public record OrderProductDto(String productId, Integer quantity) {
 }

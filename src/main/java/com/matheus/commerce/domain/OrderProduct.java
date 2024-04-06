@@ -1,13 +1,11 @@
 package com.matheus.commerce.domain;
 
-import com.matheus.commerce.dto.OrderProductDto;
+import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter

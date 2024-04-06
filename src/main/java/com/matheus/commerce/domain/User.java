@@ -1,5 +1,6 @@
 package com.matheus.commerce.domain;
 
+import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -25,7 +26,6 @@ public class User {
     private String lastName;
     private int age;
     private String email;
-
     @Column(name = "verified_email")
     private boolean verifiedEmail;
     private String password;
@@ -35,6 +35,18 @@ public class User {
     private LocalDate createdAt;
     @Column(name = "updated_at")
     private LocalDate updatedAt;
+
+    public User(UserCreateDto userCreateDto){
+        this.name= userCreateDto.name();
+        this.lastName= userCreateDto.lastName();
+        this.age= userCreateDto.age();
+        this.email= userCreateDto.email();
+        this.password= userCreateDto.password();
+        this.role=userCreateDto.role();
+        this.cpf= userCreateDto.cpf();
+        this.createdAt=LocalDate.now();
+        this.updatedAt=LocalDate.now();
+    }
 
 
 

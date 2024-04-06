@@ -1,10 +1,7 @@
 package com.matheus.commerce.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.matheus.commerce.dto.ProductDto;
+import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

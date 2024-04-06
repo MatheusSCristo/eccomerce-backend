@@ -33,6 +33,11 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/payment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/payment").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/payment").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/users/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/users/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

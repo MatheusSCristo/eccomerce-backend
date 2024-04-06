@@ -1,21 +1,16 @@
-package com.matheus.commerce.dto;
+package com.matheus.commerce.dto.order;
 
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.OrderProduct;
-import com.matheus.commerce.domain.Payment;
+import com.matheus.commerce.dto.orderProduct.OrderProductResponseDto;
+import com.matheus.commerce.dto.payment.PaymentResponseDto;
 import com.matheus.commerce.enums.OrderStatus;
-import com.matheus.commerce.enums.PaymentStatus;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

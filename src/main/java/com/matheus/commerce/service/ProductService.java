@@ -1,7 +1,7 @@
 package com.matheus.commerce.service;
 
 import com.matheus.commerce.domain.Product;
-import com.matheus.commerce.dto.ProductDto;
+import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

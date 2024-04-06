@@ -1,4 +1,4 @@
-package com.matheus.commerce.dto;
+package com.matheus.commerce.dto.orderProduct;
 
 import com.matheus.commerce.domain.OrderProduct;
 import lombok.Getter;

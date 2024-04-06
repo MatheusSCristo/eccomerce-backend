@@ -1,8 +1,8 @@
 package com.matheus.commerce.controller;
 
 import com.matheus.commerce.domain.Order;
-import com.matheus.commerce.dto.OrderDto;
-import com.matheus.commerce.dto.OrderResponseDto;
+import com.matheus.commerce.dto.order.OrderDto;
+import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

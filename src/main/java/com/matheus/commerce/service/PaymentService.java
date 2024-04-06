@@ -1,21 +1,15 @@
 package com.matheus.commerce.service;
 
 
-import com.matheus.commerce.controller.OrderController;
-import com.matheus.commerce.controller.PaymentController;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Payment;
-import com.matheus.commerce.dto.PaymentDto;
-import com.matheus.commerce.dto.PaymentResponseDto;
-import com.matheus.commerce.dto.PaymentUpdateDto;
+import com.matheus.commerce.dto.payment.PaymentDto;
+import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.enums.PaymentStatus;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

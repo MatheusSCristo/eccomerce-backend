@@ -1,9 +1,9 @@
 package com.matheus.commerce.controller;
 
 import com.matheus.commerce.domain.Payment;
-import com.matheus.commerce.dto.PaymentDto;
-import com.matheus.commerce.dto.PaymentResponseDto;
-import com.matheus.commerce.dto.PaymentUpdateDto;
+import com.matheus.commerce.dto.payment.PaymentDto;
+import com.matheus.commerce.dto.payment.PaymentResponseDto;
+import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("payment")

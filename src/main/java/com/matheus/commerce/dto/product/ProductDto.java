@@ -1,4 +1,4 @@
-package com.matheus.commerce.dto;
+package com.matheus.commerce.dto.product;
 
 import com.matheus.commerce.enums.CategoryEnum;
 import jdk.jfr.Category;
