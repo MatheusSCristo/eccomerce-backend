@@ -4,6 +4,7 @@ import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.OrderProduct;
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.dto.order.OrderDto;
+import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import com.matheus.commerce.repository.OrderProductRepository;
 import com.matheus.commerce.repository.OrderRepository;
@@ -26,8 +27,13 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<OrderResponseDto> findAll() {
+        List<OrderResponseDto> orderResponseDtoList=new ArrayList<>();
+        List<Order> orderList= orderRepository.findAll();
+        for(Order order:orderList){
+            orderResponseDtoList.add(new OrderResponseDto(order));
+        }
+        return orderResponseDtoList;
     }
 
     public void create(OrderDto orderDto) {
@@ -55,7 +61,7 @@ public class OrderService {
         return sum;
     }
 
-    public void update(OrderDto orderDto, String id) {
+    public OrderResponseDto update(OrderDto orderDto, String id) {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
@@ -80,8 +86,15 @@ public class OrderService {
                 order.setTotalInCents(calculateTotalInCents(orderProductList));
                 order.setOrderProduct(orderProductList);
                 orderRepository.save(order);
+                return new OrderResponseDto(order);
             }
         }
-
+        return null;
     }
+
+    public void delete(String id) {
+        orderRepository.deleteById(id);
+    }
+
+
 }

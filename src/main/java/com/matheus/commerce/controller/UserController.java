@@ -30,12 +30,6 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserCreateDto userCreateDto) {
-        userService.create(userCreateDto);
-        return ResponseEntity.ok().build();
-    }
-
     @PutMapping("{id}")
     public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateDto userUpdateDto, @PathVariable String id) {
         userService.update(id, userUpdateDto);
@@ -43,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<UserResponseDto> update(@PathVariable String id) {
+    public ResponseEntity<UserResponseDto> delete(@PathVariable String id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
     }

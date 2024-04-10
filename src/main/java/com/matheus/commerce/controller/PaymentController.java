@@ -26,15 +26,6 @@ public class PaymentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<PaymentResponseDto>> findAll(){
-        List<Payment> payments=paymentService.findAll();
-        List<PaymentResponseDto> paymentResponseDtoList=new ArrayList<>();
-        for(Payment payment:payments){
-            paymentResponseDtoList.add(new PaymentResponseDto(payment));
-        }
-        return ResponseEntity.ok().body(paymentResponseDtoList);
-    }
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody PaymentUpdateDto paymentUpdateDto){
         paymentService.update(paymentUpdateDto);

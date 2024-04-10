@@ -19,11 +19,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void create(UserCreateDto userCreateDto) {
-        User user = new User(userCreateDto);
-        userRepository.save(user);
-    }
-
     public UserResponseDto findById(String id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {

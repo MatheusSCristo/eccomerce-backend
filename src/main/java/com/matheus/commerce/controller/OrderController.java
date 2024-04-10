@@ -4,43 +4,43 @@ import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
+    @GetMapping
+    public ResponseEntity<List<OrderResponseDto>> findAll(){
+        List<OrderResponseDto> orderList=orderService.findAll();
+        return ResponseEntity.ok().body(orderList);
+
+    }
+
     @PostMapping
-    public ResponseEntity<Order> create(@RequestBody OrderDto orderDto){
+    public ResponseEntity<Void> create(OrderDto orderDto){
         orderService.create(orderDto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> findAll(){
-        List<Order> orders=orderService.findAll();
-        List<OrderResponseDto> orderResponseDtoList=new ArrayList<>();
-        for(Order order:orders){
-            OrderResponseDto orderResponseDto=new OrderResponseDto(order);
-            orderResponseDtoList.add(orderResponseDto);
-        }
-        return ResponseEntity.ok().body(orderResponseDtoList);
+
+    @PutMapping("{id}")
+    public ResponseEntity<OrderResponseDto> update(OrderDto orderDto, @PathVariable String id){
+        OrderResponseDto order = orderService.update(orderDto,id);
+        return ResponseEntity.ok(order);
     }
 
-    @PutMapping( value = "{id}")
-    public ResponseEntity<Void> update(@RequestBody OrderDto orderDto,@PathVariable String id){
-        orderService.update(orderDto,id);
-        return ResponseEntity.status(HttpStatus.OK).build();
-
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        orderService.delete(id);
+        return ResponseEntity.ok().build();
     }
-
 
 }

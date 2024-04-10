@@ -1,6 +1,7 @@
 package com.matheus.commerce.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import jakarta.persistence.*;

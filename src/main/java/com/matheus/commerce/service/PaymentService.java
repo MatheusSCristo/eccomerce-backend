@@ -4,6 +4,7 @@ package com.matheus.commerce.service;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Payment;
 import com.matheus.commerce.dto.payment.PaymentDto;
+import com.matheus.commerce.dto.payment.PaymentResponseDto;
 import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.enums.PaymentStatus;
 import com.matheus.commerce.repository.OrderRepository;
@@ -11,6 +12,7 @@ import com.matheus.commerce.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +45,13 @@ public class PaymentService {
 
     }
 
-    public List<Payment> findAll() {
-        return paymentRepository.findAll();
+    public List<PaymentResponseDto> findAll() {
+        List<PaymentResponseDto> paymentResponseDtoList = new ArrayList<>();
+        List<Payment> payments=paymentRepository.findAll();
+        for (Payment payment : payments) {
+            paymentResponseDtoList.add(new PaymentResponseDto(payment));
+        }
+        return paymentResponseDtoList;
     }
 
     public void update(PaymentUpdateDto paymentUpdateDto) {

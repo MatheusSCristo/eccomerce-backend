@@ -5,12 +5,15 @@ import com.matheus.commerce.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Entity(name = "tb_user")
 @Table(name = "tb_user")
@@ -18,8 +21,10 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+@EqualsAndHashCode(of = "id")
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     @Column(name = "last_name")
@@ -36,18 +41,46 @@ public class User {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    public User(UserCreateDto userCreateDto){
-        this.name= userCreateDto.name();
-        this.lastName= userCreateDto.lastName();
-        this.age= userCreateDto.age();
-        this.email= userCreateDto.email();
-        this.password= userCreateDto.password();
-        this.role=userCreateDto.role();
-        this.cpf= userCreateDto.cpf();
-        this.createdAt=LocalDate.now();
-        this.updatedAt=LocalDate.now();
+    public User(UserCreateDto userCreateDto, String encryptedPassword) {
+        this.name = userCreateDto.name();
+        this.lastName = userCreateDto.lastName();
+        this.age = userCreateDto.age();
+        this.email = userCreateDto.email();
+        this.password = encryptedPassword;
+        this.role = userCreateDto.role();
+        this.cpf = userCreateDto.cpf();
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

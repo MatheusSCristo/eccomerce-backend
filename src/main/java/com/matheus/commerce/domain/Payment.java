@@ -26,7 +26,4 @@ public class Payment {
         this.order=order;
     }
 
-    public Payment(PaymentDto paymentDto) {
-
-    }
 }
