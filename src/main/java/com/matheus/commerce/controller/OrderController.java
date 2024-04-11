@@ -4,6 +4,7 @@ import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.OrderProduct;
 import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
+import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductUpdateDto;
 import com.matheus.commerce.service.OrderService;
@@ -28,6 +29,11 @@ public class OrderController {
         return ResponseEntity.ok().body(orderList);
 
     }
+    @GetMapping("{clientId}")
+    public ResponseEntity<List<OrderResponseDto>> findByClientId(@PathVariable String clientId){
+        List<OrderResponseDto> orderList=orderService.findByClientId(clientId);
+        return ResponseEntity.ok().body(orderList);
+    }
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid OrderDto orderDto) {
@@ -36,23 +42,8 @@ public class OrderController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<OrderResponseDto> addNewOrderProduct(@RequestBody @Valid OrderDto orderDto, @PathVariable String id) {
-        OrderResponseDto order = orderService.update(orderDto, id);
-        return ResponseEntity.ok(order);
-    }
-
-    @DeleteMapping("{id}/{productOrderId}")
-    public ResponseEntity<OrderResponseDto> deleteOneOrderProduct(@PathVariable String id,@PathVariable String productOrderId) {
-        OrderResponseDto order = orderService.deleteOneOrderProduct(id,productOrderId);
-        return ResponseEntity.ok(order);
-    }
-
-    @PutMapping("{id}/{productOrderId}")
-    public ResponseEntity<OrderResponseDto> updateOneOrderProduct(
-            @RequestBody @Valid OrderProductUpdateDto orderProductUpdateDto,
-            @PathVariable String id,
-            @PathVariable String productOrderId) {
-        OrderResponseDto order = orderService.updateOneOrderProduct(orderProductUpdateDto, id,productOrderId);
+    public ResponseEntity<OrderResponseDto> update(@RequestBody @Valid OrderUpdateDto orderUpdateDto, @PathVariable String id) {
+        OrderResponseDto order = orderService.update(orderUpdateDto,id);
         return ResponseEntity.ok(order);
     }
 

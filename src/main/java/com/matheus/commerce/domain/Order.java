@@ -21,6 +21,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User user;
     @Column(name = "total_in_cents")
     private Integer totalInCents=0;
     @Column(name = "created_at")
@@ -40,5 +43,8 @@ public class Order {
     }
 
 
+    public Order(User user) {
+        this.user=user;
+    }
 }
 
