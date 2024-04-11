@@ -40,7 +40,7 @@ public class ProductController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> create(@RequestBody ProductDto productDto) {
-//        productService.create(productDto);
+        productService.create(productDto);
         return ResponseEntity.ok().build();
     }
 
