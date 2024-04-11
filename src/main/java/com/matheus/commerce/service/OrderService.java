@@ -6,6 +6,7 @@ import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
+import com.matheus.commerce.dto.orderProduct.OrderProductUpdateDto;
 import com.matheus.commerce.repository.OrderProductRepository;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.ProductRepository;
@@ -28,9 +29,9 @@ public class OrderService {
     private ProductRepository productRepository;
 
     public List<OrderResponseDto> findAll() {
-        List<OrderResponseDto> orderResponseDtoList=new ArrayList<>();
-        List<Order> orderList= orderRepository.findAll();
-        for(Order order:orderList){
+        List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
+        List<Order> orderList = orderRepository.findAll();
+        for (Order order : orderList) {
             orderResponseDtoList.add(new OrderResponseDto(order));
         }
         return orderResponseDtoList;
@@ -38,9 +39,10 @@ public class OrderService {
 
     public void create(OrderDto orderDto) {
         Order order = new Order();
+        System.out.println(orderDto.products());
         orderRepository.save(order);
         Set<OrderProduct> orderProductList = new HashSet<>();
-        for (OrderProductDto orderProductDto : orderDto.orderProductDto()) {
+        for (OrderProductDto orderProductDto : orderDto.products()) {
             Optional<Product> optionalProduct = productRepository.findById(orderProductDto.productId());
             if (optionalProduct.isPresent()) {
                 Product product = optionalProduct.get();
@@ -66,7 +68,7 @@ public class OrderService {
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
             Set<OrderProduct> orderProductList = order.getOrderProduct();
-            for (OrderProductDto orderProductDto : orderDto.orderProductDto()) {
+            for (OrderProductDto orderProductDto : orderDto.products()) {
                 Optional<Product> optionalProduct = productRepository.findById(orderProductDto.productId());
                 if (optionalProduct.isPresent()) {
                     Product product = optionalProduct.get();
@@ -97,4 +99,46 @@ public class OrderService {
     }
 
 
+    public OrderResponseDto deleteOneOrderProduct(String id, String productOrderId) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            Set<OrderProduct> orderProductList = order.getOrderProduct();
+            orderProductList.removeIf(orderProduct -> Objects.equals(orderProduct.getId(), productOrderId));
+            order.setOrderProduct(orderProductList);
+            orderRepository.save(order);
+            orderProductRepository.deleteById(productOrderId);
+            return new OrderResponseDto(order);
+        }
+        return null;
+    }
+
+    public OrderResponseDto updateOneOrderProduct(OrderProductUpdateDto orderProductUpdateDto, String id, String productOrderId) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            Set<OrderProduct> orderProductList = order.getOrderProduct();
+            Optional<OrderProduct> orderProductOptional = findOrderProduct(productOrderId, orderProductList);
+            if (orderProductOptional.isPresent()) {
+                orderProductList.removeIf(orderProduct -> Objects.equals(orderProduct.getId(), productOrderId));
+                OrderProduct orderProduct = orderProductOptional.get();
+                orderProduct.setQuantity(orderProductUpdateDto.quantity());
+                orderProduct.setSubtotalInCents(orderProductUpdateDto.quantity() * orderProduct.getProduct().getPriceInCents());
+                orderProductList.add(orderProduct);
+                order.setOrderProduct(orderProductList);
+                orderRepository.save(order);
+                orderProductRepository.save(orderProduct);
+            }
+            return new OrderResponseDto(order);
+        }
+        return null;
+    }
+
+    private Optional<OrderProduct> findOrderProduct(String productOrderId, Set<OrderProduct> orderProductList) {
+        return orderProductList.stream()
+                .filter(orderProduct -> Objects.equals(orderProduct.getId(), productOrderId))
+                .findFirst();
+    }
 }
+
+
