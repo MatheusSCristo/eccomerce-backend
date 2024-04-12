@@ -27,7 +27,7 @@ public class PaymentController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody PaymentUpdateDto paymentUpdateDto){
+    public ResponseEntity<Void> update(@RequestBody PaymentUpdateDto paymentUpdateDto) {
         paymentService.update(paymentUpdateDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

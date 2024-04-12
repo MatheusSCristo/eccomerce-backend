@@ -5,6 +5,7 @@ import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.dto.product.ProductResponseDto;
 import com.matheus.commerce.enums.Role;
 import com.matheus.commerce.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +40,7 @@ public class ProductController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> create(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Product> create(@RequestBody @Valid ProductDto productDto) {
         productService.create(productDto);
         return ResponseEntity.ok().build();
     }

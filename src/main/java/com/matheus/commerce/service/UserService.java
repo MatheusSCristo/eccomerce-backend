@@ -6,6 +6,8 @@ import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserResponseDto;
 import com.matheus.commerce.dto.user.UserUpdateDto;
+import com.matheus.commerce.exceptions.EmailAlreadyRegisteredException;
+import com.matheus.commerce.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +29,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-
             return new UserResponseDto(user, getResponseOrder(user.getOrders()));
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
     public List<UserResponseDto> findAll() {
@@ -45,7 +46,7 @@ public class UserService {
     public UserResponseDto update(String id, UserUpdateDto userUpdateDto) {
         Optional<User> userOptional = userRepository.findByEmail(userUpdateDto.email());
         if (userOptional.isPresent()) {
-            throw new RuntimeException("Email already registered");
+            throw new EmailAlreadyRegisteredException();
         }
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -54,11 +55,15 @@ public class UserService {
             userRepository.save(newUser);
             return new UserResponseDto(user, getResponseOrder(newUser.getOrders()));
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
     public void delete(String id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (IllegalArgumentException exception) {
+            throw new UserNotFoundException();
+        }
     }
 
     private User updateUser(User user, UserUpdateDto userUpdateDto) {

@@ -9,6 +9,8 @@ import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductUpdateDto;
+import com.matheus.commerce.exceptions.ProductNotFoundException;
+import com.matheus.commerce.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.OrderProductRepository;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.ProductRepository;
@@ -47,7 +49,7 @@ public class OrderService {
     public void create(OrderDto orderDto) {
         Optional<User> optionalUser = userRepository.findById(orderDto.clientId());
         if (optionalUser.isPresent()) {
-            User user=optionalUser.get();
+            User user = optionalUser.get();
             Order order = new Order(user);
             orderRepository.save(order);
             Set<OrderProduct> orderProductList = new HashSet<>();
@@ -58,15 +60,21 @@ public class OrderService {
                     OrderProduct orderProduct = new OrderProduct(orderProductDto, product, order);
                     orderProductRepository.save(orderProduct);
                     orderProductList.add(orderProduct);
+                } else {
+                    throw new ProductNotFoundException();
                 }
             }
             order.setTotalInCents(calculateTotalInCents(orderProductList));
             orderRepository.save(order);
-            Set<Order> userOrders=user.getOrders();
+            Set<Order> userOrders = user.getOrders();
             userOrders.add(order);
             user.setOrders(userOrders);
             userRepository.save(user);
+        } else {
+            throw new UserNotFoundException();
         }
+
+
     }
 
     private Integer calculateTotalInCents(Set<OrderProduct> list) {

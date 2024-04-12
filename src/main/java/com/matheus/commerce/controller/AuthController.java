@@ -1,6 +1,7 @@
 package com.matheus.commerce.controller;
 
 import com.matheus.commerce.domain.User;
+import com.matheus.commerce.dto.user.UserAccessResponseDto;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserLoginDto;
 import com.matheus.commerce.dto.user.UserResponseDto;
@@ -30,11 +31,11 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid UserCreateDto userCreateDto){
+    public ResponseEntity<UserAccessResponseDto> register(@RequestBody @Valid UserCreateDto userCreateDto){
         return ResponseEntity.ok(authService.register(userCreateDto));
     }
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDto> getUser(@RequestBody @Valid UserLoginDto userLoginDto){
+    public ResponseEntity<UserAccessResponseDto> getUser(@RequestBody @Valid UserLoginDto userLoginDto){
         return ResponseEntity.ok(authService.authenticate(userLoginDto));
     }
 

@@ -9,21 +9,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductService  {
+public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
-
     }
 
-    public void create(ProductDto productDto){
-        Product product= new Product(productDto);
+    public void create(ProductDto productDto) {
+        Product product = new Product(productDto);
         productRepository.save(product);
     }
-
 
     public List<Product> delete(String id) {
         productRepository.deleteById(id);

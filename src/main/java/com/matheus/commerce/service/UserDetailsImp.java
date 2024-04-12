@@ -1,5 +1,6 @@
 package com.matheus.commerce.service;
 
+import com.matheus.commerce.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,6 @@ public class UserDetailsImp implements UserDetailsService {
     private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("User not found"));
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 }
