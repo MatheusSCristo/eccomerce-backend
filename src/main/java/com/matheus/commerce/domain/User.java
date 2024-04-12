@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "tb_user")
 @Table(name = "tb_user")
@@ -40,6 +42,10 @@ public class User implements UserDetails {
     private LocalDate createdAt;
     @Column(name = "updated_at")
     private LocalDate updatedAt;
+    @OneToMany
+    @JoinColumn(name = "orders")
+    private Set<Order> orders = new HashSet<>();
+
 
     public User(UserCreateDto userCreateDto, String encryptedPassword) {
         this.name = userCreateDto.name();
@@ -56,7 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override

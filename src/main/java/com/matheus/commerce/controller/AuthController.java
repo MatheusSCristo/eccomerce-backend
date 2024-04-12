@@ -3,6 +3,7 @@ package com.matheus.commerce.controller;
 import com.matheus.commerce.domain.User;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserLoginDto;
+import com.matheus.commerce.dto.user.UserResponseDto;
 import com.matheus.commerce.infra.security.AuthenticationResponse;
 import com.matheus.commerce.repository.UserRepository;
 import com.matheus.commerce.service.AuthService;
@@ -33,7 +34,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(userCreateDto));
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> getUser(@RequestBody @Valid UserLoginDto userLoginDto){
+    public ResponseEntity<UserResponseDto> getUser(@RequestBody @Valid UserLoginDto userLoginDto){
         return ResponseEntity.ok(authService.authenticate(userLoginDto));
     }
 

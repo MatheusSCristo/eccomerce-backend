@@ -25,26 +25,25 @@ public class Order {
     @JoinColumn(name = "client_id")
     private User user;
     @Column(name = "total_in_cents")
-    private Integer totalInCents=0;
+    private Integer totalInCents = 0;
     @Column(name = "created_at")
-    private LocalDate createdAt= LocalDate.now();
+    private LocalDate createdAt = LocalDate.now();
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus=OrderStatus.preparing;
+    private OrderStatus orderStatus = OrderStatus.preparing;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderProduct> orderProduct = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
-    public Order(Integer totalInCents){
+    public Order(Integer totalInCents) {
         this.createdAt = LocalDate.now();
         this.totalInCents = totalInCents;
     }
 
-
     public Order(User user) {
-        this.user=user;
+        this.user = user;
     }
 }
 

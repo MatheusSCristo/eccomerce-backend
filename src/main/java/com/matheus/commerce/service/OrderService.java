@@ -47,7 +47,8 @@ public class OrderService {
     public void create(OrderDto orderDto) {
         Optional<User> optionalUser = userRepository.findById(orderDto.clientId());
         if (optionalUser.isPresent()) {
-            Order order = new Order(optionalUser.get());
+            User user=optionalUser.get();
+            Order order = new Order(user);
             orderRepository.save(order);
             Set<OrderProduct> orderProductList = new HashSet<>();
             for (OrderProductDto orderProductDto : orderDto.products()) {
@@ -61,6 +62,10 @@ public class OrderService {
             }
             order.setTotalInCents(calculateTotalInCents(orderProductList));
             orderRepository.save(order);
+            Set<Order> userOrders=user.getOrders();
+            userOrders.add(order);
+            user.setOrders(userOrders);
+            userRepository.save(user);
         }
     }
 
