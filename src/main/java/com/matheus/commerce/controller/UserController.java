@@ -1,7 +1,5 @@
 package com.matheus.commerce.controller;
 
-import com.matheus.commerce.domain.User;
-import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserResponseDto;
 import com.matheus.commerce.dto.user.UserUpdateDto;
 import com.matheus.commerce.service.UserService;
@@ -9,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateDto userUpdateDto, @PathVariable String id) {
+    public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UserUpdateDto userUpdateDto, @PathVariable String id) {
         UserResponseDto user = userService.update(id, userUpdateDto);
         return ResponseEntity.ok().body(user);
     }

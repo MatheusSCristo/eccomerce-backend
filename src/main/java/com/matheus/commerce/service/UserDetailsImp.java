@@ -1,6 +1,6 @@
 package com.matheus.commerce.service;
 
-import com.matheus.commerce.exceptions.UserNotFoundException;
+import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

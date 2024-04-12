@@ -1,4 +1,7 @@
 package com.matheus.commerce.dto.user;
 
-public record UserLoginDto(String email,String password) {
+
+import javax.validation.constraints.NotBlank;
+
+public record UserLoginDto(@NotBlank String email, @NotBlank String password) {
 }

@@ -1,6 +1,6 @@
 package com.matheus.commerce.dto.payment;
 
-import com.matheus.commerce.enums.PaymentStatus;
+import jakarta.validation.constraints.NotBlank;
 
-public record PaymentDto(String orderId, String cardNumber, PaymentStatus paymentStatus) {
+public record PaymentDto(@NotBlank String orderId) {
 }

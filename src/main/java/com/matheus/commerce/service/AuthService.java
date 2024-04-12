@@ -6,17 +6,15 @@ import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.user.UserAccessResponseDto;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserLoginDto;
-import com.matheus.commerce.dto.user.UserResponseDto;
-import com.matheus.commerce.exceptions.EmailAlreadyRegisteredException;
-import com.matheus.commerce.exceptions.UserNotFoundException;
-import com.matheus.commerce.infra.security.AuthenticationResponse;
+import com.matheus.commerce.infra.exceptions.AuthenticationException;
+import com.matheus.commerce.infra.exceptions.EmailAlreadyRegisteredException;
+import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.infra.security.JwtService;
 import com.matheus.commerce.repository.UserRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +38,7 @@ public class AuthService {
 
 
     public UserAccessResponseDto register(UserCreateDto userCreateDto) {
+        validateFields(userCreateDto);
         Optional<User> userOptional = userRepository.findByEmail(userCreateDto.email());
         if (userOptional.isPresent()) {
             throw new EmailAlreadyRegisteredException();
@@ -49,6 +48,10 @@ public class AuthService {
         userRepository.save(user);
         String token = jwtService.generateToken(user);
         return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
+    }
+
+    private void validateFields(UserCreateDto userCreateDto) {
+        userCreateDto.email();
     }
 
     public UserAccessResponseDto authenticate(UserLoginDto userLoginDto) {
@@ -61,6 +64,9 @@ public class AuthService {
             return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
         } catch (NoSuchElementException exception) {
             throw new UserNotFoundException();
+        }
+        catch (InternalAuthenticationServiceException exception){
+            throw new AuthenticationException("Error on users authentication");
         }
     }
 

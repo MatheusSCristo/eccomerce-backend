@@ -5,19 +5,16 @@ import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Payment;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.payment.PaymentDto;
-import com.matheus.commerce.dto.payment.PaymentResponseDto;
 import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.enums.PaymentStatus;
-import com.matheus.commerce.exceptions.OrderNotFoundException;
-import com.matheus.commerce.exceptions.PaymentNotFoundException;
-import com.matheus.commerce.exceptions.PaymentStillProcessingException;
+import com.matheus.commerce.infra.exceptions.OrderNotFoundException;
+import com.matheus.commerce.infra.exceptions.PaymentNotFoundException;
+import com.matheus.commerce.infra.exceptions.PaymentStillProcessingException;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

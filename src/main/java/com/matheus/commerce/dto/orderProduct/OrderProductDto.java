@@ -1,4 +1,7 @@
 package com.matheus.commerce.dto.orderProduct;
 
-public record OrderProductDto(String productId, Integer quantity) {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+public record OrderProductDto(@NotBlank String productId, @NotNull Integer quantity) {
 }

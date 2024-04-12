@@ -1,4 +1,6 @@
 package com.matheus.commerce.dto.orderProduct;
 
-public record OrderProductUpdateDto(Integer quantity) {
+import jakarta.validation.constraints.NotNull;
+
+public record OrderProductUpdateDto(@NotNull Integer quantity) {
 }
