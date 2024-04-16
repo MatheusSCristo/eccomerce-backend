@@ -59,7 +59,7 @@ public class AuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userLoginDto.email(), userLoginDto.password())
             );
-            User user = (userRepository.findByEmail(userLoginDto.email()).orElseThrow());
+            User user = (userRepository.findByEmail(userLoginDto.email()).orElseThrow(UserNotFoundException::new));
             String token = jwtService.generateToken(user);
             return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
         } catch (NoSuchElementException exception) {
@@ -72,6 +72,7 @@ public class AuthService {
 
     public Set<OrderResponseDto> getResponseOrder(Set<Order> orders) {
         Set<OrderResponseDto> orderResponseDtoSet = new HashSet<>();
+        if(!orders.isEmpty())
         for (Order order : orders) {
             orderResponseDtoSet.add(new OrderResponseDto(order));
         }

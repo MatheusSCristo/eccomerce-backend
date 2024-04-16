@@ -42,7 +42,7 @@ public class User implements UserDetails {
     private LocalDate createdAt;
     @Column(name = "updated_at")
     private LocalDate updatedAt;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "orders")
     private Set<Order> orders = new HashSet<>();
 

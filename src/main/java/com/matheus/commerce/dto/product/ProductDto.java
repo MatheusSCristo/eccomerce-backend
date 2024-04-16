@@ -12,7 +12,7 @@ public record ProductDto(
         String description,
         @NotNull
         Integer priceInCents,
-        @NotBlank
+        @NotNull
         String imageUrl,
         @NotNull
         Double rating,
