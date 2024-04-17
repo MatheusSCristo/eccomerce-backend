@@ -7,12 +7,14 @@ import com.matheus.commerce.dto.user.UserAccessResponseDto;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserLoginDto;
 import com.matheus.commerce.infra.exceptions.AuthenticationException;
+import com.matheus.commerce.infra.exceptions.CredentialsError;
 import com.matheus.commerce.infra.exceptions.EmailAlreadyRegisteredException;
 import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.infra.security.JwtService;
 import com.matheus.commerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,20 +64,23 @@ public class AuthService {
             User user = (userRepository.findByEmail(userLoginDto.email()).orElseThrow(UserNotFoundException::new));
             String token = jwtService.generateToken(user);
             return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
-        } catch (NoSuchElementException exception) {
-            throw new UserNotFoundException();
-        }
-        catch (InternalAuthenticationServiceException exception){
-            throw new AuthenticationException("Error on users authentication");
+        } catch (InternalAuthenticationServiceException exception) {
+            throw new AuthenticationException("Error on user authentication");
+        } catch (BadCredentialsException exception) {
+            throw new CredentialsError();
         }
     }
 
     public Set<OrderResponseDto> getResponseOrder(Set<Order> orders) {
         Set<OrderResponseDto> orderResponseDtoSet = new HashSet<>();
-        if(!orders.isEmpty())
-        for (Order order : orders) {
-            orderResponseDtoSet.add(new OrderResponseDto(order));
-        }
+        if (!orders.isEmpty())
+            for (Order order : orders) {
+                orderResponseDtoSet.add(new OrderResponseDto(order));
+            }
         return orderResponseDtoSet;
+    }
+
+    public void delete(String id) {
+        userRepository.deleteById(id);
     }
 }

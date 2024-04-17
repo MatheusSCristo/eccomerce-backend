@@ -5,6 +5,8 @@ import com.matheus.commerce.dto.user.UserAccessResponseDto;
 import com.matheus.commerce.dto.user.UserCreateDto;
 import com.matheus.commerce.dto.user.UserLoginDto;
 import com.matheus.commerce.enums.Role;
+import com.matheus.commerce.infra.exceptions.AuthenticationException;
+import com.matheus.commerce.infra.exceptions.CredentialsError;
 import com.matheus.commerce.infra.exceptions.EmailAlreadyRegisteredException;
 import com.matheus.commerce.service.AuthService;
 import org.junit.jupiter.api.Assertions;
@@ -26,33 +28,34 @@ public class AuthServiceTest {
     private String password = "123456";
     private Role role = Role.USER;
     private String cpf = "07233484902";
+    private UserCreateDto userCreated = new UserCreateDto(name, lastName, age, email, password, role, cpf);
+    private UserLoginDto userLogged=new UserLoginDto(email,password);
+
 
     @Test
-    public void shouldRegisterNewUser() {
-
-        UserCreateDto userCreateDto = new UserCreateDto(name, lastName, age, email, password, role, cpf);
-        UserAccessResponseDto userAccessResponseDto = authService.register(userCreateDto);
+    public void ShouldRegisterNewUser() {
+        UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
         Assertions.assertEquals(userAccessResponseDto.lastName(), lastName);
         Assertions.assertEquals(userAccessResponseDto.age(), age);
         Assertions.assertEquals(userAccessResponseDto.email(), email);
         Assertions.assertEquals(userAccessResponseDto.role(), role);
         Assertions.assertEquals(userAccessResponseDto.cpf(), cpf);
+        authService.delete(userAccessResponseDto.id());
     }
 
     @Test
-    public void shouldThrowWhenEmailAlreadyRegistered() {
-        UserCreateDto user = new UserCreateDto(name, lastName, age, email, password, role, cpf);
-        UserAccessResponseDto userAccessResponseDto = authService.register(user);
-        Assertions.assertThrows(EmailAlreadyRegisteredException.class, () -> authService.register(user));
+    public void ShouldThrowWhenEmailAlreadyRegistered() {
+        UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
+        Assertions.assertThrows(EmailAlreadyRegisteredException.class, () -> authService.register(userCreated));
+        authService.delete(userAccessResponseDto.id());
+
     }
 
     @Test
-    public void shouldAuthenticatedUser(){
-        UserLoginDto userLoginDto=new UserLoginDto(email,password);
-        UserCreateDto userCreateDto = new UserCreateDto(name, lastName, age, email, password, role, cpf);
-        authService.register(userCreateDto);
-        UserAccessResponseDto userAccessResponseDto = authService.authenticate(userLoginDto);
+    public void ShouldAuthenticatedUser(){
+        authService.register(userCreated);
+        UserAccessResponseDto userAccessResponseDto = authService.authenticate(userLogged);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
         Assertions.assertEquals(userAccessResponseDto.lastName(), lastName);
         Assertions.assertEquals(userAccessResponseDto.age(), age);
@@ -60,7 +63,22 @@ public class AuthServiceTest {
         Assertions.assertEquals(userAccessResponseDto.role(), role);
         Assertions.assertEquals(userAccessResponseDto.cpf(), cpf);
         Assertions.assertNotNull(userAccessResponseDto.accessToken());
+        authService.delete(userAccessResponseDto.id());
+
     }
+
+    @Test
+    public void ShouldThrowWhenEmailNotRegistered(){
+        Assertions.assertThrows(AuthenticationException.class,()->authService.authenticate(userLogged));
+    }
+
+    @Test
+    public void ShouldThrowWhenPasswordDoesntMatch(){
+        UserAccessResponseDto userAccessResponseDto=authService.register(userCreated);
+        Assertions.assertThrows(CredentialsError.class,()->authService.authenticate(new UserLoginDto(email,"123")));
+        authService.delete(userAccessResponseDto.id());
+    }
+
 
 
 }

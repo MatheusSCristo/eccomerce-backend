@@ -61,9 +61,17 @@ public class RestHandlerException extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(responseExceptions.getError()).body(responseExceptions);
     }
 
+    @ExceptionHandler(CredentialsError.class)
+    private ResponseEntity<ExceptionResponse> CredentialsErrorHandler(CredentialsError exception) {
+        ExceptionResponse responseExceptions = new ExceptionResponse("Invalid user credentials", HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(responseExceptions.getError()).body(responseExceptions);
+    }
+
+
+
     @ExceptionHandler(AuthenticationException.class)
     private ResponseEntity<ExceptionResponse> AuthenticationErrorHandler(AuthenticationException exception) {
-        ExceptionResponse responseExceptions = new ExceptionResponse(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        ExceptionResponse responseExceptions = new ExceptionResponse("User not found", HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(responseExceptions.getError()).body(responseExceptions);
     }
 
