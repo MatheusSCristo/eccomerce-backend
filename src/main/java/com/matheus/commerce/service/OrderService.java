@@ -8,18 +8,21 @@ import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
+import com.matheus.commerce.infra.exceptions.OrderNotFoundException;
 import com.matheus.commerce.infra.exceptions.ProductNotFoundException;
 import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.OrderProductRepository;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class OrderService {
 
 
@@ -45,7 +48,7 @@ public class OrderService {
     }
 
 
-    public void create(OrderDto orderDto) {
+    public Order create(OrderDto orderDto) {
         Optional<User> optionalUser = userRepository.findById(orderDto.clientId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -69,6 +72,7 @@ public class OrderService {
             userOrders.add(order);
             user.setOrders(userOrders);
             userRepository.save(user);
+            return order;
         } else {
             throw new UserNotFoundException();
         }
@@ -92,7 +96,7 @@ public class OrderService {
             orderRepository.save(order);
             return new OrderResponseDto(order);
         }
-        return null;
+        throw new OrderNotFoundException();
     }
 
     public void delete(String id) {
@@ -111,7 +115,7 @@ public class OrderService {
             }
             return orders;
         }
-        return null;
+        throw new UserNotFoundException();
     }
 }
 

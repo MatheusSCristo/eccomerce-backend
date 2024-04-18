@@ -59,6 +59,10 @@ public class User implements UserDetails {
         this.updatedAt = LocalDate.now();
     }
 
+    public User(String id) {
+        this.id=id;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

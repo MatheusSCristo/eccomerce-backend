@@ -52,4 +52,16 @@ public class Product {
     }
 
 
+    public Product(String id,ProductDto productDto) {
+        this.id=id;
+        this.brand = productDto.brand();
+        this.categories = productDto.categories();
+        this.color = productDto.color();
+        this.description = productDto.description();
+        this.imageUrl = productDto.imageUrl();
+        this.name = productDto.name();
+        this.model = productDto.model();
+        this.priceInCents = productDto.priceInCents();
+        this.rating = productDto.rating();
+    }
 }
