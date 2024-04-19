@@ -8,6 +8,7 @@ import com.matheus.commerce.dto.user.UserUpdateDto;
 import com.matheus.commerce.infra.exceptions.EmailAlreadyRegisteredException;
 import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     @Autowired

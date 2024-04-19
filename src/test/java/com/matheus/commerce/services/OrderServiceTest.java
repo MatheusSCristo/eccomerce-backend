@@ -1,7 +1,5 @@
 package com.matheus.commerce.services;
 
-import static org.mockito.Mockito.when;
-
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.domain.User;
@@ -9,7 +7,6 @@ import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
-import com.matheus.commerce.dto.orderProduct.OrderProductResponseDto;
 import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import com.matheus.commerce.enums.OrderStatus;
@@ -21,7 +18,6 @@ import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.repository.UserRepository;
 import com.matheus.commerce.service.OrderService;
-import com.matheus.commerce.service.UserService;
 
 import java.util.*;
 
@@ -29,9 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class OrderServiceTest {

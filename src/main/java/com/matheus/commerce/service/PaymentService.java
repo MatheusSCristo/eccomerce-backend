@@ -12,12 +12,14 @@ import com.matheus.commerce.infra.exceptions.PaymentNotFoundException;
 import com.matheus.commerce.infra.exceptions.PaymentStillProcessingException;
 import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.PaymentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PaymentService {
 
     @Autowired
@@ -26,7 +28,7 @@ public class PaymentService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public void create(PaymentDto paymentDto) {
+    public Payment create(PaymentDto paymentDto) {
         Optional<Order> optionalOrder = orderRepository.findById(paymentDto.orderId());
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
@@ -41,20 +43,21 @@ public class PaymentService {
             order.setPayment(payment);
             paymentRepository.save(payment);
             orderRepository.save(order);
+            return payment;
         } else {
             throw new OrderNotFoundException();
         }
 
     }
 
-    public OrderResponseDto update(PaymentUpdateDto paymentUpdateDto) {
+    public Payment update(PaymentUpdateDto paymentUpdateDto) {
         Optional<Payment> optionalPayment = paymentRepository.findById(paymentUpdateDto.id());
         if (optionalPayment.isPresent()) {
             Payment payment = optionalPayment.get();
             Optional<Order> orderOptional = orderRepository.findById(payment.getOrder().getId());
             payment.setPaymentStatus(paymentUpdateDto.paymentStatus());
             paymentRepository.save(payment);
-            return new OrderResponseDto(orderOptional.get());
+            return payment;
         } else {
             throw new PaymentNotFoundException();
         }

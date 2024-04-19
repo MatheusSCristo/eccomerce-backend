@@ -10,6 +10,7 @@ import com.matheus.commerce.infra.exceptions.CredentialsError;
 import com.matheus.commerce.infra.exceptions.EmailAlreadyRegisteredException;
 import com.matheus.commerce.service.AuthService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,10 +30,11 @@ public class AuthServiceTest {
     private Role role = Role.USER;
     private String cpf = "07233484902";
     private UserCreateDto userCreated = new UserCreateDto(name, lastName, age, email, password, role, cpf);
-    private UserLoginDto userLogged=new UserLoginDto(email,password);
+    private UserLoginDto userLogged = new UserLoginDto(email, password);
 
 
     @Test
+    @DisplayName("Should register new user")
     public void ShouldRegisterNewUser() {
         UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
@@ -45,6 +47,8 @@ public class AuthServiceTest {
     }
 
     @Test
+    @DisplayName("Should throw EmailAlreadyRegisteredException on creating new user")
+
     public void ShouldThrowWhenEmailAlreadyRegistered() {
         UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertThrows(EmailAlreadyRegisteredException.class, () -> authService.register(userCreated));
@@ -53,7 +57,9 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void ShouldAuthenticatedUser(){
+    @DisplayName("Should authenticate user")
+
+    public void ShouldAuthenticatedUser() {
         authService.register(userCreated);
         UserAccessResponseDto userAccessResponseDto = authService.authenticate(userLogged);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
@@ -68,17 +74,18 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void ShouldThrowWhenEmailNotRegistered(){
-        Assertions.assertThrows(AuthenticationException.class,()->authService.authenticate(userLogged));
+    @DisplayName("Should throw EmailNotRegisteredException on authenticating user")
+
+    public void ShouldThrowWhenEmailNotRegistered() {
+        Assertions.assertThrows(AuthenticationException.class, () -> authService.authenticate(userLogged));
     }
 
     @Test
-    public void ShouldThrowWhenPasswordDoesntMatch(){
-        UserAccessResponseDto userAccessResponseDto=authService.register(userCreated);
-        Assertions.assertThrows(CredentialsError.class,()->authService.authenticate(new UserLoginDto(email,"123")));
+    @DisplayName("Should throw CredentialErrorException on authenticating user")
+
+    public void ShouldThrowWhenPasswordDoesntMatch() {
+        UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
+        Assertions.assertThrows(CredentialsError.class, () -> authService.authenticate(new UserLoginDto(email, "123")));
         authService.delete(userAccessResponseDto.id());
     }
-
-
-
 }

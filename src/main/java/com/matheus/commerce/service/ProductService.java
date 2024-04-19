@@ -2,13 +2,16 @@ package com.matheus.commerce.service;
 
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.dto.product.ProductDto;
+import com.matheus.commerce.infra.exceptions.ProductNotFoundException;
 import com.matheus.commerce.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductService {
 
     @Autowired
@@ -24,7 +27,11 @@ public class ProductService {
     }
 
     public List<Product> delete(String id) {
-        productRepository.deleteById(id);
+        try {
+            productRepository.deleteById(id);
+        } catch (IllegalArgumentException exception) {
+            throw new ProductNotFoundException();
+        }
         return findAll();
     }
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
-public record UserUpdateDto(@NotBlank String name, @NotBlank String lastName, @NotNull Integer age, @NotBlank String email,
-                            @NotBlank String password, @NotNull Role role, @NotBlank String cpf,
-                            @NotBlank Boolean verifiedEmail) {
+public record UserUpdateDto(String name, String lastName,  Integer age, String email,
+                            String password, Role role, String cpf,
+                            Boolean verifiedEmail) {
 }
