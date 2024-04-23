@@ -69,14 +69,14 @@ public class UserServiceTest {
     @Test
     @DisplayName("Should update user")
     public void shouldUpdateUser() {
-        User user = new User(new UserCreateDto("Matheus", "Senas", 19, "oldEmail@gmail.com", "12345", Role.USER, "123123123"), "asdasda");
+        User user = new User(new UserCreateDto("Matheus", "Senas", "20-04-2008", "oldEmail@gmail.com", "12345", "123123123"), "asdasda");
         Mockito.when(userRepository.findByEmail("newEmail@gmail.com")).thenReturn(Optional.empty());
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        UserResponseDto userResponseDto = userService.update(user.getId(), new UserUpdateDto("Felipe", "Melo", 12, "newEmail@gmail.com", null, null, null, true));
+        UserResponseDto userResponseDto = userService.update(user.getId(), new UserUpdateDto("Felipe", "Melo", "20-04-2004", "newEmail@gmail.com", null, null, null, true));
         Assertions.assertEquals(userResponseDto.id(), user.getId());
         Assertions.assertEquals("Felipe", userResponseDto.name());
         Assertions.assertEquals("Melo", userResponseDto.lastName());
-        Assertions.assertEquals(12, userResponseDto.age());
+        Assertions.assertEquals("20-04-2004", userResponseDto.birthDate());
         Assertions.assertEquals("newEmail@gmail.com", userResponseDto.email());
         Assertions.assertEquals("123123123", userResponseDto.cpf());
         Assertions.assertEquals(Role.USER, userResponseDto.role());
@@ -87,13 +87,13 @@ public class UserServiceTest {
     public void shouldThrowUserNotFoundExceptionOnUpdate() {
         Mockito.when(userRepository.findByEmail("newEmail@gmail.com")).thenReturn(Optional.empty());
         Mockito.when(userRepository.findById("123")).thenReturn(Optional.empty());
-        Assertions.assertThrows(UserNotFoundException.class,() -> userService.update("123", new UserUpdateDto("Felipe", "Melo", 12, "newEmail@gmail.com", null, null, null, true)));
+        Assertions.assertThrows(UserNotFoundException.class,() -> userService.update("123", new UserUpdateDto("Felipe", "Melo", "20-04-2004", "newEmail@gmail.com", null, null, null, true)));
     }@Test
     @DisplayName("Should throw EmailAlreadyRegisteredException on updating user")
     public void shouldThrowEmailAlreadyRegisteredExceptionOnUpdate() {
         User user = new User();
         Mockito.when(userRepository.findByEmail("newEmail@gmail.com")).thenReturn(Optional.of(user));
-        Assertions.assertThrows(EmailAlreadyRegisteredException.class,() -> userService.update("123", new UserUpdateDto("Felipe", "Melo", 12, "newEmail@gmail.com", null, null, null, true)));
+        Assertions.assertThrows(EmailAlreadyRegisteredException.class,() -> userService.update("123", new UserUpdateDto("Felipe", "Melo", "20-04-2004", "newEmail@gmail.com", null, null, null, true)));
     }
     @Test
     @DisplayName("Should delete user")

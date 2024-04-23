@@ -40,7 +40,6 @@ public class AuthService {
 
 
     public UserAccessResponseDto register(UserCreateDto userCreateDto) {
-        validateFields(userCreateDto);
         Optional<User> userOptional = userRepository.findByEmail(userCreateDto.email());
         if (userOptional.isPresent()) {
             throw new EmailAlreadyRegisteredException();
@@ -52,9 +51,6 @@ public class AuthService {
         return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
     }
 
-    private void validateFields(UserCreateDto userCreateDto) {
-        userCreateDto.email();
-    }
 
     public UserAccessResponseDto authenticate(UserLoginDto userLoginDto) {
         try {

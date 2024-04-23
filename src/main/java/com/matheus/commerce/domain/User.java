@@ -12,10 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name = "tb_user")
 @Table(name = "tb_user")
@@ -31,12 +28,13 @@ public class User implements UserDetails {
     private String name;
     @Column(name = "last_name")
     private String lastName;
-    private int age;
+    @Column(name="birth_date")
+    private String birthDate;
     private String email;
     @Column(name = "verified_email")
     private boolean verifiedEmail;
     private String password;
-    private Role role;
+    private Role role=Role.USER;
     private String cpf;
     @Column(name = "created_at")
     private LocalDate createdAt;
@@ -50,10 +48,9 @@ public class User implements UserDetails {
     public User(UserCreateDto userCreateDto, String encryptedPassword) {
         this.name = userCreateDto.name();
         this.lastName = userCreateDto.lastName();
-        this.age = userCreateDto.age();
+        this.birthDate = userCreateDto.birthDate();
         this.email = userCreateDto.email();
         this.password = encryptedPassword;
-        this.role = userCreateDto.role();
         this.cpf = userCreateDto.cpf();
         this.createdAt = LocalDate.now();
         this.updatedAt = LocalDate.now();

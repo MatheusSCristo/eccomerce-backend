@@ -70,7 +70,7 @@ public class UserService {
     private User updateUser(User user, UserUpdateDto userUpdateDto) {
         user.setName(userUpdateDto.name() != null ? userUpdateDto.name() : user.getName());
         user.setLastName(userUpdateDto.lastName() != null ? userUpdateDto.lastName() : user.getLastName());
-        user.setAge(userUpdateDto.age() != null ? userUpdateDto.age() : user.getAge());
+        user.setBirthDate(userUpdateDto.birthDate() != null ? userUpdateDto.birthDate() : user.getBirthDate());
         user.setCpf(userUpdateDto.cpf() != null ? userUpdateDto.cpf() : user.getCpf());
         user.setPassword(userUpdateDto.password() != null ? passwordEncoder.encode(userUpdateDto.password()) : user.getPassword());
         user.setEmail(userUpdateDto.email() != null ? userUpdateDto.email() : user.getEmail());

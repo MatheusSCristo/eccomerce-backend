@@ -6,13 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.util.Date;
+
 
 public record UserCreateDto(@NotBlank (message = "name") String name,
                             @NotBlank String lastName,
-                            @NotNull Integer age,
+                            @NotNull String birthDate,
                             @NotBlank @Email String email,
                             @NotBlank String password,
-                            @NotNull Role role,
                             @NotBlank @CPF String cpf
 ) {
 }

@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                 return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req.requestMatchers(HttpMethod.POST, "/products").hasRole(Role.ADMIN.name())
                         .requestMatchers("/payment").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
+                        .requestMatchers("/orders").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
                         .anyRequest().permitAll())
                         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                         .userDetailsService(userDetailsImp)

@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.Instant;
+import java.util.Date;
+
 @SpringBootTest
 public class AuthServiceTest {
 
@@ -24,12 +27,12 @@ public class AuthServiceTest {
 
     private String name = "Matheus";
     private String lastName = "Senas";
-    private int age = 19;
+    private String birthDate = String.valueOf(Date.from(Instant.now()));
     private String email = "matheus@gmail.com";
     private String password = "123456";
     private Role role = Role.USER;
     private String cpf = "07233484902";
-    private UserCreateDto userCreated = new UserCreateDto(name, lastName, age, email, password, role, cpf);
+    private UserCreateDto userCreated = new UserCreateDto(name,birthDate, lastName, email, password, cpf);
     private UserLoginDto userLogged = new UserLoginDto(email, password);
 
 
@@ -39,7 +42,6 @@ public class AuthServiceTest {
         UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
         Assertions.assertEquals(userAccessResponseDto.lastName(), lastName);
-        Assertions.assertEquals(userAccessResponseDto.age(), age);
         Assertions.assertEquals(userAccessResponseDto.email(), email);
         Assertions.assertEquals(userAccessResponseDto.role(), role);
         Assertions.assertEquals(userAccessResponseDto.cpf(), cpf);
@@ -64,7 +66,7 @@ public class AuthServiceTest {
         UserAccessResponseDto userAccessResponseDto = authService.authenticate(userLogged);
         Assertions.assertEquals(userAccessResponseDto.name(), name);
         Assertions.assertEquals(userAccessResponseDto.lastName(), lastName);
-        Assertions.assertEquals(userAccessResponseDto.age(), age);
+        Assertions.assertEquals(userAccessResponseDto.birthDate(), birthDate);
         Assertions.assertEquals(userAccessResponseDto.email(), email);
         Assertions.assertEquals(userAccessResponseDto.role(), role);
         Assertions.assertEquals(userAccessResponseDto.cpf(), cpf);
