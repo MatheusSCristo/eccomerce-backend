@@ -3,6 +3,7 @@ package com.matheus.commerce.controller;
 import com.matheus.commerce.dto.payment.PaymentDto;
 import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.service.PaymentService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("payment")
+@AllArgsConstructor
 public class PaymentController {
 
     @Autowired

@@ -39,7 +39,7 @@ public class OrderResponseDto {
         this.createdAt = order.getCreatedAt();
         this.totalInCents=order.getTotalInCents();
         this.payment= order.getPayment() !=null ? new PaymentResponseDto(order.getPayment()): null;
-        this.billingDetails=new BillingDetailsResponseDto(order.getBillingDetails());
+        this.billingDetails=order.getBillingDetails() !=null?new BillingDetailsResponseDto(order.getBillingDetails()):null;
 
     }
 }

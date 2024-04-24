@@ -54,11 +54,6 @@ public class OrderServiceTest {
         orderService = new OrderService(orderRepository, orderProductRepository, productRepository, userRepository);
     }
 
-    @AfterEach
-    void finish() {
-
-    }
-
     @Test
     @DisplayName("Should create order")
     public void shouldCreateOrder() {

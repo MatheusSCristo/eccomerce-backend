@@ -27,7 +27,7 @@ public class BillingDetails {
     private String city;
     private String street;
     private String neighborhood;
-    @OneToOne(mappedBy = "billing_details")
+    @OneToOne(mappedBy = "billingDetails")
     private Order order;
 
     public BillingDetails(BillingDetailsDto billingDetailsDto){
