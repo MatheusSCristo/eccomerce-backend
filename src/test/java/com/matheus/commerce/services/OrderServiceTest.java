@@ -1,8 +1,10 @@
 package com.matheus.commerce.services;
 
+import com.matheus.commerce.domain.BillingDetails;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.domain.User;
+import com.matheus.commerce.dto.billingDetails.BillingDetailsDto;
 import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
@@ -63,9 +65,7 @@ public class OrderServiceTest {
         User user = new User("123");
         Mockito.when(userRepository.findById("123")).thenReturn(Optional.of(user));
         Mockito.when(productRepository.findById("12345")).thenReturn(Optional.ofNullable(product));
-        Order order = orderService.create(orderDto);
-        Assertions.assertNotNull(order);
-        Assertions.assertEquals(order.getUser().getId(), user.getId());
+        Assertions.assertDoesNotThrow(() -> orderService.create(orderDto));
     }
 
     @Test
@@ -99,35 +99,36 @@ public class OrderServiceTest {
         Order order2 = new Order(user);
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Mockito.when(orderRepository.findAllByUser(user)).thenReturn(Optional.of(new ArrayList<>(List.of(order1, order2))));
-        List<OrderResponseDto> orders= orderService.findByClientId(user.getId());
-        Assertions.assertEquals(orders.size(),2);
-        Assertions.assertEquals(orders.get(0).getId(),order1.getId());
-        Assertions.assertEquals(orders.get(1).getId(),order2.getId());
+        List<OrderResponseDto> orders = orderService.findByClientId(user.getId());
+        Assertions.assertEquals(orders.size(), 2);
+        Assertions.assertEquals(orders.get(0).getId(), order1.getId());
+        Assertions.assertEquals(orders.get(1).getId(), order2.getId());
     }
 
     @Test
     @DisplayName("Should throw UserNotFoundException on create order")
-    public void shouldThrowUserNotFoundOnCreate(){
-        Assertions.assertThrows(UserNotFoundException.class,()->orderService.create(orderDto));
+    public void shouldThrowUserNotFoundOnCreate() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> orderService.create(orderDto));
     }
+
     @Test
     @DisplayName("Should throw ProductNotFoundException on create order")
-    public void shouldThrowProductNotFoundOnCreate(){
-        User user= new User();
+    public void shouldThrowProductNotFoundOnCreate() {
+        User user = new User();
         Mockito.when(userRepository.findById(orderDto.clientId())).thenReturn(Optional.of(user));
-        Assertions.assertThrows(ProductNotFoundException.class,()->orderService.create(orderDto));
+        Assertions.assertThrows(ProductNotFoundException.class, () -> orderService.create(orderDto));
     }
 
     @Test
     @DisplayName("Should throw OrderNotFoundException on order update")
-    public void shouldThrowProductNotFoundOnUpdate(){
-        Assertions.assertThrows(OrderNotFoundException.class,()->orderService.update(new OrderUpdateDto(OrderStatus.delivered),"123"));
+    public void shouldThrowProductNotFoundOnUpdate() {
+        Assertions.assertThrows(OrderNotFoundException.class, () -> orderService.update(new OrderUpdateDto(OrderStatus.delivered), "123"));
     }
 
     @Test
     @DisplayName("Should throw UserNotFoundException on findByClient ")
-    public void shouldThrowUserNotFoundExceptionOnFindByClient(){
-        Assertions.assertThrows(UserNotFoundException.class,()->orderService.findByClientId("123"));
+    public void shouldThrowUserNotFoundExceptionOnFindByClient() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> orderService.findByClientId("123"));
     }
 
     @NotNull
@@ -146,7 +147,8 @@ public class OrderServiceTest {
         ));
         Set<OrderProductDto> orderProductDtos = new HashSet<>();
         orderProductDtos.add(new OrderProductDto(product.getId(), 3));
-        return new OrderDto(orderProductDtos, "123");
+        return new OrderDto(orderProductDtos, "123", new BillingDetailsDto("Matheus", "Senas",
+                "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"));
     }
 
 

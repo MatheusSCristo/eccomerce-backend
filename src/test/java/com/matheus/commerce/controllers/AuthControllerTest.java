@@ -99,8 +99,6 @@ public class AuthControllerTest {
         response.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(userCreateDto.name()));
         response.andExpect(MockMvcResultMatchers.jsonPath("$.accessToken").value(userAccessResponseDto.accessToken()));
     }
-
-
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

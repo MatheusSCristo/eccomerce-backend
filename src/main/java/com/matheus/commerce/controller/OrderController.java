@@ -6,6 +6,7 @@ import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,11 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @PostMapping
+    public ResponseEntity<Void> create(@RequestBody @Valid OrderDto orderDto) {
+        orderService.create(orderDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> findAll() {
@@ -31,11 +37,6 @@ public class OrderController {
         return ResponseEntity.ok().body(orderList);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestBody @Valid OrderDto orderDto) {
-        orderService.create(orderDto);
-        return ResponseEntity.ok().build();
-    }
 
     @PutMapping("{id}")
     public ResponseEntity<OrderResponseDto> update(@RequestBody @Valid OrderUpdateDto orderUpdateDto, @PathVariable String id) {

@@ -36,6 +36,9 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "payment_id")
     private Payment payment;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "billing_id")
+    private BillingDetails billingDetails;
 
     public Order(Integer totalInCents) {
         this.createdAt = LocalDate.now();

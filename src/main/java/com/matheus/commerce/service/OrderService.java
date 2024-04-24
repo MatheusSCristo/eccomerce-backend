@@ -1,9 +1,6 @@
 package com.matheus.commerce.service;
 
-import com.matheus.commerce.domain.Order;
-import com.matheus.commerce.domain.OrderProduct;
-import com.matheus.commerce.domain.Product;
-import com.matheus.commerce.domain.User;
+import com.matheus.commerce.domain.*;
 import com.matheus.commerce.dto.order.OrderDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
@@ -48,7 +45,7 @@ public class OrderService {
     }
 
 
-    public Order create(OrderDto orderDto) {
+    public void create(OrderDto orderDto) {
         Optional<User> optionalUser = userRepository.findById(orderDto.clientId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -67,12 +64,13 @@ public class OrderService {
                 }
             }
             order.setTotalInCents(calculateTotalInCents(orderProductList));
+            BillingDetails billingDetails=new BillingDetails(orderDto.billingDetailsDto());
+            order.setBillingDetails(billingDetails);
             orderRepository.save(order);
             Set<Order> userOrders = user.getOrders();
             userOrders.add(order);
             user.setOrders(userOrders);
             userRepository.save(user);
-            return order;
         } else {
             throw new UserNotFoundException();
         }
