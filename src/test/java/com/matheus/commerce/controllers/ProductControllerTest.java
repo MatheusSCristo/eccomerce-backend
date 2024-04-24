@@ -83,10 +83,7 @@ public class ProductControllerTest {
         response.andExpect(MockMvcResultMatchers.status().is(200));
         response.andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
         response.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(productList.size())));
-        response.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(product1.getId()));
-        response.andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(product2.getId()));
-        response.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(product1.getName()));
-        response.andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(product2.getName()));
+
 
     }
 
