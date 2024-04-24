@@ -32,7 +32,7 @@ public class AuthServiceTest {
     private String password = "123456";
     private Role role = Role.USER;
     private String cpf = "07233484902";
-    private UserCreateDto userCreated = new UserCreateDto(name,birthDate, lastName, email, password, cpf);
+    private UserCreateDto userCreated = new UserCreateDto(name, lastName,birthDate, email, password, cpf);
     private UserLoginDto userLogged = new UserLoginDto(email, password);
 
 
@@ -50,7 +50,6 @@ public class AuthServiceTest {
 
     @Test
     @DisplayName("Should throw EmailAlreadyRegisteredException on creating new user")
-
     public void ShouldThrowWhenEmailAlreadyRegistered() {
         UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertThrows(EmailAlreadyRegisteredException.class, () -> authService.register(userCreated));
@@ -60,7 +59,6 @@ public class AuthServiceTest {
 
     @Test
     @DisplayName("Should authenticate user")
-
     public void ShouldAuthenticatedUser() {
         authService.register(userCreated);
         UserAccessResponseDto userAccessResponseDto = authService.authenticate(userLogged);
@@ -77,14 +75,12 @@ public class AuthServiceTest {
 
     @Test
     @DisplayName("Should throw EmailNotRegisteredException on authenticating user")
-
     public void ShouldThrowWhenEmailNotRegistered() {
         Assertions.assertThrows(AuthenticationException.class, () -> authService.authenticate(userLogged));
     }
 
     @Test
     @DisplayName("Should throw CredentialErrorException on authenticating user")
-
     public void ShouldThrowWhenPasswordDoesntMatch() {
         UserAccessResponseDto userAccessResponseDto = authService.register(userCreated);
         Assertions.assertThrows(CredentialsError.class, () -> authService.authenticate(new UserLoginDto(email, "123")));
