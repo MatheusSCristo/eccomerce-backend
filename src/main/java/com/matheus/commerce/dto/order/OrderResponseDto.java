@@ -1,7 +1,10 @@
 package com.matheus.commerce.dto.order;
 
+import com.matheus.commerce.domain.BillingDetails;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.OrderProduct;
+import com.matheus.commerce.dto.billingDetails.BillingDetailsDto;
+import com.matheus.commerce.dto.billingDetails.BillingDetailsResponseDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductResponseDto;
 import com.matheus.commerce.dto.payment.PaymentResponseDto;
 import com.matheus.commerce.enums.OrderStatus;
@@ -22,6 +25,7 @@ public class OrderResponseDto {
     private OrderStatus orderStatus;
     private List<OrderProductResponseDto> orderProduct = new ArrayList<>();
     private PaymentResponseDto payment;
+    private BillingDetailsResponseDto billingDetails;
 
     public OrderResponseDto(Order order) {
         List<OrderProductResponseDto> orderProductResponseDtoList = new ArrayList<>();
@@ -35,6 +39,7 @@ public class OrderResponseDto {
         this.createdAt = order.getCreatedAt();
         this.totalInCents=order.getTotalInCents();
         this.payment= order.getPayment() !=null ? new PaymentResponseDto(order.getPayment()): null;
+        this.billingDetails=new BillingDetailsResponseDto(order.getBillingDetails());
 
     }
 }

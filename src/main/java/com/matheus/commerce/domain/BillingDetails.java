@@ -27,6 +27,8 @@ public class BillingDetails {
     private String city;
     private String street;
     private String neighborhood;
+    @OneToOne(mappedBy = "billing_details")
+    private Order order;
 
     public BillingDetails(BillingDetailsDto billingDetailsDto){
         this.name=billingDetailsDto.name();
