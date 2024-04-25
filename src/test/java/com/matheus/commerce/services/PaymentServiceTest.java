@@ -1,9 +1,7 @@
 package com.matheus.commerce.services;
 
-import ch.qos.logback.core.testUtil.MockInitialContext;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Payment;
-import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.payment.PaymentDto;
 import com.matheus.commerce.dto.payment.PaymentUpdateDto;
 import com.matheus.commerce.enums.PaymentStatus;

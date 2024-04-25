@@ -6,7 +6,6 @@ import com.matheus.commerce.enums.CategoryEnum;
 import com.matheus.commerce.infra.exceptions.ProductNotFoundException;
 import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.service.ProductService;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
