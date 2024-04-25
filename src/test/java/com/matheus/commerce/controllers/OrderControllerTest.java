@@ -69,7 +69,7 @@ public class OrderControllerTest {
         Product product = new Product(new ProductDto("Veja", "Limpador", 2000, "", 2.3, "Veja", "Veja", "Transparent", Set.of()));
         OrderProductDto orderProductDto= new OrderProductDto(product.getId(),4);
         OrderDto orderDto = new OrderDto(Set.of(orderProductDto),"12345",new BillingDetailsDto("Matheus", "Senas",
-                "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"));
+                "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"),1000);
         ResultActions response=mockMvc.perform(post("/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(orderDto))

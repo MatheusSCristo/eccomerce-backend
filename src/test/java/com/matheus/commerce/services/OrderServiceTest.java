@@ -142,7 +142,7 @@ public class OrderServiceTest {
         Set<OrderProductDto> orderProductDtos = new HashSet<>();
         orderProductDtos.add(new OrderProductDto(product.getId(), 3));
         return new OrderDto(orderProductDtos, "123", new BillingDetailsDto("Matheus", "Senas",
-                "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"));
+                "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"),1000);
     }
 
 

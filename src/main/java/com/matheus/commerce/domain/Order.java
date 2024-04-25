@@ -39,11 +39,7 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "billing_id")
     private BillingDetails billingDetails;
-
-    public Order(Integer totalInCents) {
-        this.createdAt = LocalDate.now();
-        this.totalInCents = totalInCents;
-    }
+    private Integer shippingFeeInCents;
 
     public Order(User user) {
         this.user = user;
