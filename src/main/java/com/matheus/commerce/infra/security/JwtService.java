@@ -8,6 +8,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY = "1c420e3b0eb5f7eac5a1c3b2a5f55dc569d68ad4a77bec51f860ccf19136bdcb";
+    @Value("${api.security.token.secret}")
+    private String SECRET_KEY ;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
