@@ -63,7 +63,7 @@ public class OrderService {
                     throw new ProductNotFoundException();
                 }
             }
-            order.setTotalInCents(calculateTotalInCents(orderProductList));
+            order.setTotalInCents(calculateTotalInCents(orderProductList)+orderDto.shippingFeeInCents());
             BillingDetails billingDetails=new BillingDetails(orderDto.billingDetailsDto());
             order.setBillingDetails(billingDetails);
             orderRepository.save(order);

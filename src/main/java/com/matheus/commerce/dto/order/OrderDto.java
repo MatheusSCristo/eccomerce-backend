@@ -7,5 +7,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
-public record OrderDto(@NotNull Set<OrderProductDto> products, @NotBlank String clientId, @NotNull BillingDetailsDto billingDetailsDto) {
+public record OrderDto(@NotNull Set<OrderProductDto> products, @NotBlank String clientId, @NotNull BillingDetailsDto billingDetailsDto,@NotNull Integer shippingFeeInCents) {
 }
