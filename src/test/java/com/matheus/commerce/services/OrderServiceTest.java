@@ -1,6 +1,5 @@
 package com.matheus.commerce.services;
 
-import com.matheus.commerce.domain.BillingDetails;
 import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.domain.User;

@@ -98,7 +98,5 @@ public class ProductControllerTest {
         response.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(productList.size())));
         response.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(product2.getId()));
         response.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(product2.getName()));
-
     }
-//
 }
