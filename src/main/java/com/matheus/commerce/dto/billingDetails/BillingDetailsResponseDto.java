@@ -2,7 +2,11 @@ package com.matheus.commerce.dto.billingDetails;
 
 import com.matheus.commerce.domain.BillingDetails;
 import jakarta.persistence.Column;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class BillingDetailsResponseDto {
     private String id;
     private String name;
