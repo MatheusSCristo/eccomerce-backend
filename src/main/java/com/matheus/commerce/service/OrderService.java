@@ -46,6 +46,7 @@ public class OrderService {
 
 
     public void create(OrderDto orderDto) {
+        System.out.println(orderDto.clientId());
         Optional<User> optionalUser = userRepository.findById(orderDto.clientId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
