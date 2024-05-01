@@ -10,7 +10,7 @@
     <h1 style="color: #333;">E-Commerce</h1>
     <p style="font-size: 1.2rem;">Olá <b th:text="${username}">Matheus</b>,</p>
     <p>Para confirmar seu cadastro clique no botão abaixo:</p>
-    <a href="http://localhost:8080/api/email/?userEmail=matheus.cristo1@outlook.com"
+    <a th:href="@{'http://localhost:3000/auth/register/verify'(userEmail=${userEmail})}"
        style="display: inline-block; background-color: #e03616; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Confirmar email</a>
 </div>
 </body>

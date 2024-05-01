@@ -60,7 +60,6 @@ public class EmailService {
         if(optionalUser.isEmpty()) throw new UserNotFoundException();
         User user= optionalUser.get();
         user.setVerifiedEmail(true);
-        System.out.println(user.getName() +"   "+  user.isVerifiedEmail());
         userRepository.save(user);
     }
 
