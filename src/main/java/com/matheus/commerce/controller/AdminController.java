@@ -18,5 +18,4 @@ public class AdminController {
     AdminResponse adminResponse=adminService.getUserByToken(accessToken);
     return ResponseEntity.ok().body(adminResponse);
     }
-
 }

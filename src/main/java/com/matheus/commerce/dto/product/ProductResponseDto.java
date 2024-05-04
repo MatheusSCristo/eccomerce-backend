@@ -22,14 +22,14 @@ public class ProductResponseDto {
     private Double rating;
     private String brand;
     private String model;
-    private String color;
+    private Set<String> colors;
     private Set<CategoryEnum> categories = new HashSet<>();
-
+    private Set<Integer> sizes=new HashSet<>();
     public ProductResponseDto(Product product){
         this.id=product.getId();
         this.brand = product.getBrand();
         this.categories = product.getCategories();
-        this.color = product.getColor();
+        this.colors = product.getColors();
         this.description = product.getDescription();
         this.imageUrl = product.getImageUrl();
         this.name = product.getName();

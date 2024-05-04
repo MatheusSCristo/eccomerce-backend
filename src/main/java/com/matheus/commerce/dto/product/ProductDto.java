@@ -20,10 +20,12 @@ public record ProductDto(
         String brand,
         @NotBlank
         String model,
-        @NotBlank
-        String color,
         @NotNull
-        Set<CategoryEnum> categories
+        Set<String> colors,
+        @NotNull
+        Set<CategoryEnum> categories,
+        @NotNull
+        Set<Integer> sizes
 
 ) {
 }

@@ -13,6 +13,7 @@ import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.order.OrderUpdateDto;
 import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import com.matheus.commerce.dto.product.ProductDto;
+import com.matheus.commerce.enums.CategoryEnum;
 import com.matheus.commerce.enums.OrderStatus;
 import com.matheus.commerce.infra.security.JwtAuthFilter;
 import com.matheus.commerce.infra.security.JwtService;
@@ -66,7 +67,7 @@ public class OrderControllerTest {
     @Test
     @DisplayName("Should create a order")
     public void shouldCreateOrder() throws JsonProcessingException,Exception{
-        Product product = new Product(new ProductDto("Veja", "Limpador", 2000, "", 2.3, "Veja", "Veja", "Transparent", Set.of()));
+        Product product = new Product(new ProductDto("Veja", "Limpador", 2000, "", 2.3, "Veja", "Veja", Set.of("Black"), Set.of(CategoryEnum.kids),Set.of(32)));
         OrderProductDto orderProductDto= new OrderProductDto(product.getId(),4);
         OrderDto orderDto = new OrderDto(Set.of(orderProductDto),"12345",new BillingDetailsDto("Matheus", "Senas",
                 "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"),1000);

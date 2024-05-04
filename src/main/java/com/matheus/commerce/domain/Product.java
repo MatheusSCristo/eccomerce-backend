@@ -31,7 +31,8 @@ public class Product {
     private Double rating;
     private String brand;
     private String model;
-    private String color;
+    private Set<String> colors=new HashSet<>();
+    private Set<Integer> sizes=new HashSet<>();
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<CategoryEnum> categories = new HashSet<>();
@@ -42,13 +43,14 @@ public class Product {
     public Product(ProductDto productDto) {
         this.brand = productDto.brand();
         this.categories = productDto.categories();
-        this.color = productDto.color();
+        this.colors = productDto.colors();
         this.description = productDto.description();
         this.imageUrl = productDto.imageUrl();
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();
         this.rating = productDto.rating();
+        this.sizes=productDto.sizes();
     }
 
 
@@ -56,12 +58,13 @@ public class Product {
         this.id=id;
         this.brand = productDto.brand();
         this.categories = productDto.categories();
-        this.color = productDto.color();
+        this.colors = productDto.colors();
         this.description = productDto.description();
         this.imageUrl = productDto.imageUrl();
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();
         this.rating = productDto.rating();
+        this.sizes=productDto.sizes();
     }
 }

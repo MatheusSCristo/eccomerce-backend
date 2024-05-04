@@ -23,7 +23,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
     @GetMapping
     public ResponseEntity<Set<ProductResponseDto>> findAll() {
         List<Product> productList = productService.findAll();
