@@ -36,6 +36,7 @@ public class ProductResponseDto {
         this.model = product.getModel();
         this.priceInCents = product.getPriceInCents();
         this.rating = product.getRating();
+        this.sizes=product.getSizes();
     }
 
 
