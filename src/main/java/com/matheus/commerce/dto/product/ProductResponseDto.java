@@ -18,7 +18,7 @@ public class ProductResponseDto {
     private String name;
     private String description;
     private Integer priceInCents;
-    private String imageUrl;
+    private Set<String> imagesUrl;
     private Double rating;
     private String brand;
     private String model;
@@ -31,7 +31,7 @@ public class ProductResponseDto {
         this.categories = product.getCategories();
         this.colors = product.getColors();
         this.description = product.getDescription();
-        this.imageUrl = product.getImageUrl();
+        this.imagesUrl = product.getImagesUrl();
         this.name = product.getName();
         this.model = product.getModel();
         this.priceInCents = product.getPriceInCents();

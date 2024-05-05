@@ -67,7 +67,7 @@ public class OrderControllerTest {
     @Test
     @DisplayName("Should create a order")
     public void shouldCreateOrder() throws JsonProcessingException,Exception{
-        Product product = new Product(new ProductDto("Veja", "Limpador", 2000, "", 2.3, "Veja", "Veja", Set.of("Black"), Set.of(CategoryEnum.kids),Set.of(32)));
+        Product product = new Product(new ProductDto("Veja", "Limpador", 2000, Set.of(""), 2.3, "Veja", "Veja", Set.of("Black"), Set.of(CategoryEnum.kids),Set.of(32)));
         OrderProductDto orderProductDto= new OrderProductDto(product.getId(),4);
         OrderDto orderDto = new OrderDto(Set.of(orderProductDto),"12345",new BillingDetailsDto("Matheus", "Senas",
                 "matheus.cristo@outlook.com","84999999", "123812831", "Natal", "Amintas", "Lagoa Nova"),1000);

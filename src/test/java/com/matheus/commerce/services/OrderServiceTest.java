@@ -131,7 +131,7 @@ public class OrderServiceTest {
         product = new Product("12345", new ProductDto("X1000",
                 "A powerful smartphone with advanced features.",
                 9999,
-                "https://example.com/smartphone.jpg",
+                Set.of("https://example.com/smartphone.jpg"),
                 4.5,
                 "ExampleBrand",
                 "Smartphone",

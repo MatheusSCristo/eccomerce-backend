@@ -27,7 +27,7 @@ public class Product {
     private String description;
     @Column(name = "price_in_cents")
     private Integer priceInCents;
-    private String imageUrl;
+    private Set<String> imagesUrl;
     private Double rating;
     private String brand;
     private String model;
@@ -45,7 +45,7 @@ public class Product {
         this.categories = productDto.categories();
         this.colors = productDto.colors();
         this.description = productDto.description();
-        this.imageUrl = productDto.imageUrl();
+        this.imagesUrl = productDto.imagesUrl();
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();
@@ -60,7 +60,7 @@ public class Product {
         this.categories = productDto.categories();
         this.colors = productDto.colors();
         this.description = productDto.description();
-        this.imageUrl = productDto.imageUrl();
+        this.imagesUrl = productDto.imagesUrl();
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();

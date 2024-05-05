@@ -68,8 +68,8 @@ public class ProductControllerTest {
 
     @BeforeEach
     void setup() {
-        product2 = new Product(new ProductDto("Headphone", "Great", 60000, "", 4.5, "Multilaser", "P300", Set.of("Black"), Set.of(CategoryEnum.casual, CategoryEnum.kids, CategoryEnum.fashion),Set.of(32,33,35)));
-        product1 = new Product(new ProductDto("Veja", "Limpador", 3000, "", 3.7, "Veja", "Veja",  Set.of("Blue"), Set.of(CategoryEnum.casual),Set.of(32,33,35)));
+        product2 = new Product(new ProductDto("Headphone", "Great", 60000, Set.of(""), 4.5, "Multilaser", "P300", Set.of("Black"), Set.of(CategoryEnum.casual, CategoryEnum.kids, CategoryEnum.fashion),Set.of(32,33,35)));
+        product1 = new Product(new ProductDto("Veja", "Limpador", 3000, Set.of(""), 3.7, "Veja", "Veja",  Set.of("Blue"), Set.of(CategoryEnum.casual),Set.of(32,33,35)));
         product1.setId("1");
         product2.setId("2");
     }

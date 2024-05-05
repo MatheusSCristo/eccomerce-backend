@@ -45,7 +45,7 @@ public class ProductServiceTest {
     @Test
     @DisplayName("Should create a product")
     public void shouldCreateProduct() {
-        Assertions.assertDoesNotThrow(() -> productService.create(new ProductDto("Casa", "Casa", 23032, "", 4.5, "Caixa", "Casa", Set.of("Black"), Set.of(CategoryEnum.fashion),Set.of(1))));
+        Assertions.assertDoesNotThrow(() -> productService.create(new ProductDto("Casa", "Casa", 23032, Set.of(""), 4.5, "Caixa", "Casa", Set.of("Black"), Set.of(CategoryEnum.fashion),Set.of(1))));
     }
 
     @Test
