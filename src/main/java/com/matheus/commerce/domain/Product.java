@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,9 +37,10 @@ public class Product {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<CategoryEnum> categories = new HashSet<>();
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts = new HashSet<>();
+    @Column(name = "created_at")
+    private LocalDate createdAt = LocalDate.now();
 
     public Product(ProductDto productDto) {
         this.brand = productDto.brand();

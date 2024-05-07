@@ -2,12 +2,14 @@ package com.matheus.commerce.dto.product;
 
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.enums.CategoryEnum;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ public class ProductResponseDto {
     private Set<String> colors;
     private Set<CategoryEnum> categories = new HashSet<>();
     private Set<Integer> sizes=new HashSet<>();
+    private LocalDate createdAt;
     public ProductResponseDto(Product product){
         this.id=product.getId();
         this.brand = product.getBrand();
@@ -37,6 +40,7 @@ public class ProductResponseDto {
         this.priceInCents = product.getPriceInCents();
         this.rating = product.getRating();
         this.sizes=product.getSizes();
+        this.createdAt=product.getCreatedAt();
     }
 
 
