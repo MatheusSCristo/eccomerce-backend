@@ -5,6 +5,8 @@ import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import com.matheus.commerce.infra.exceptions.ProductNotFoundException;
 import com.matheus.commerce.repository.ProductRepository;
+import com.matheus.commerce.repository.RatingRepository;
+import com.matheus.commerce.repository.UserRepository;
 import com.matheus.commerce.service.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @SpringBootTest
@@ -24,11 +27,18 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private RatingRepository ratingRepository;
+
+
     private ProductService productService;
 
     @BeforeEach
     void setup() {
-        productService = new ProductService(productRepository);
+        productService = new ProductService(productRepository,userRepository,ratingRepository);
     }
 
     @Test

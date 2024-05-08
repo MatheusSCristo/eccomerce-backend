@@ -43,6 +43,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "orders")
     private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Rating> ratings = new HashSet<>();
+
 
 
     public User(UserCreateDto userCreateDto, String encryptedPassword) {

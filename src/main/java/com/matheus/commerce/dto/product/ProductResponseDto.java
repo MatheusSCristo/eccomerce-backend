@@ -1,6 +1,8 @@
 package com.matheus.commerce.dto.product;
 
 import com.matheus.commerce.domain.Product;
+import com.matheus.commerce.domain.Rating;
+import com.matheus.commerce.dto.Rating.RatingDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -21,13 +23,14 @@ public class ProductResponseDto {
     private String description;
     private Integer priceInCents;
     private Set<String> imagesUrl;
-    private Double rating;
+    private Set<RatingDto> ratings;
     private String brand;
     private String model;
     private Set<String> colors;
     private Set<CategoryEnum> categories = new HashSet<>();
     private Set<Integer> sizes=new HashSet<>();
     private LocalDate createdAt;
+
     public ProductResponseDto(Product product){
         this.id=product.getId();
         this.brand = product.getBrand();
@@ -38,9 +41,18 @@ public class ProductResponseDto {
         this.name = product.getName();
         this.model = product.getModel();
         this.priceInCents = product.getPriceInCents();
-        this.rating = product.getRating();
+        this.ratings = getRatingDtoList(product.getRatings()) ;
         this.sizes=product.getSizes();
         this.createdAt=product.getCreatedAt();
+    }
+
+    private Set<RatingDto> getRatingDtoList(Set<Rating> ratings){
+        Set<RatingDto> ratingDtos=new HashSet<>();
+        for(Rating rating:ratings){
+            ratingDtos.add(new RatingDto(rating.getNumber(),rating.getComment(),rating.getUser().getId()));
+        }
+        return ratingDtos;
+
     }
 
 

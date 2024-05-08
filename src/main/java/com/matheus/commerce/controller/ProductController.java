@@ -1,6 +1,8 @@
 package com.matheus.commerce.controller;
 
 import com.matheus.commerce.domain.Product;
+import com.matheus.commerce.domain.Rating;
+import com.matheus.commerce.dto.Rating.RatingDto;
 import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.dto.product.ProductResponseDto;
 import com.matheus.commerce.service.ProductService;
@@ -46,5 +48,10 @@ public class ProductController {
         return ResponseEntity.ok().body(productList);
     }
 
+    @PatchMapping("{id}")
+    public ResponseEntity<Product> createRating(@PathVariable String id, @RequestBody RatingDto ratingDto){
+        Product product= productService.createRating(id,ratingDto);
+        return ResponseEntity.ok().build();
+    }
 
 }

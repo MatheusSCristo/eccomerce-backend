@@ -1,7 +1,9 @@
 package com.matheus.commerce.service;
 
 import com.matheus.commerce.domain.Order;
+import com.matheus.commerce.domain.Rating;
 import com.matheus.commerce.domain.User;
+import com.matheus.commerce.dto.Rating.RatingDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.user.UserResponseDto;
 import com.matheus.commerce.dto.user.UserUpdateDto;
@@ -12,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.matheus.commerce.dto.product.ProductResponseDto.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -30,7 +33,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            return new UserResponseDto(user, getResponseOrder(user.getOrders()));
+            return new UserResponseDto(user, getResponseOrder(user.getOrders()),getRatingDtoList(user.getRatings()));
         }
         throw new UserNotFoundException();
     }
@@ -39,9 +42,17 @@ public class UserService {
         List<User> userList = userRepository.findAll();
         List<UserResponseDto> userResponseList = new ArrayList<>();
         for (User user : userList) {
-            userResponseList.add(new UserResponseDto(user, getResponseOrder(user.getOrders())));
+            userResponseList.add(new UserResponseDto(user, getResponseOrder(user.getOrders()),getRatingDtoList(user.getRatings())));
         }
         return userResponseList;
+    }
+
+    private Set<RatingDto> getRatingDtoList(Set<Rating> ratings) {
+        Set<RatingDto> ratingDtos=new HashSet<>();
+        for(Rating rating:ratings){
+            ratingDtos.add(new RatingDto(rating.getNumber(),rating.getComment(),rating.getUser().getId()));
+        }
+        return ratingDtos;
     }
 
     public UserResponseDto update(String id, UserUpdateDto userUpdateDto) {
@@ -54,7 +65,7 @@ public class UserService {
             User user = optionalUser.get();
             User newUser = updateUser(user, userUpdateDto);
             userRepository.save(newUser);
-            return new UserResponseDto(user, getResponseOrder(newUser.getOrders()));
+            return new UserResponseDto(user, getResponseOrder(newUser.getOrders()),getRatingDtoList(user.getRatings()));
         }
         throw new UserNotFoundException();
     }

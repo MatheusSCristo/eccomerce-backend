@@ -1,5 +1,6 @@
 package com.matheus.commerce.dto.product;
 
+import com.matheus.commerce.domain.Rating;
 import com.matheus.commerce.enums.CategoryEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
@@ -28,4 +29,5 @@ public record ProductDto(
         Set<Integer> sizes
 
 ) {
+
 }

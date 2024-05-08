@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matheus.commerce.controller.ProductController;
 import com.matheus.commerce.controller.UserController;
 import com.matheus.commerce.domain.Order;
+import com.matheus.commerce.domain.Rating;
 import com.matheus.commerce.domain.User;
+import com.matheus.commerce.dto.Rating.RatingDto;
 import com.matheus.commerce.dto.order.OrderResponseDto;
 import com.matheus.commerce.dto.user.UserResponseDto;
 import com.matheus.commerce.dto.user.UserUpdateDto;
@@ -78,7 +80,7 @@ public class UserControllerTest {
     @DisplayName("Should find user by id ")
     public void shouldFindUserById() throws Exception {
         User user1 = new User("1");
-        Mockito.when(userService.findById(user1.getId())).thenReturn(new UserResponseDto(user1,getResponseOrder(user1.getOrders())));
+        Mockito.when(userService.findById(user1.getId())).thenReturn(new UserResponseDto(user1,getResponseOrder(user1.getOrders()),getRatingDtoList(user1.getRatings())));
         ResultActions response = mockMvc.perform(get("/users/"+ user1.getId()));
         response.andExpect(MockMvcResultMatchers.status().is(200));
         response.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(user1.getId()));
@@ -92,7 +94,7 @@ public class UserControllerTest {
         user.setName("Matheus");
         user.setEmail("matheus.cristo@outlook.com");
         UserUpdateDto userUpdateDto=new UserUpdateDto("Matheus",null,null,null,null,null,null,true);
-        Mockito.when(userService.update(user.getId(),userUpdateDto)).thenReturn(new UserResponseDto(user,getResponseOrder(user.getOrders())));
+        Mockito.when(userService.update(user.getId(),userUpdateDto)).thenReturn(new UserResponseDto(user,getResponseOrder(user.getOrders()),getRatingDtoList(user.getRatings())));
         ResultActions response = mockMvc.perform(put("/users/"+ user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(userUpdateDto)));
@@ -106,7 +108,7 @@ public class UserControllerTest {
     public List<UserResponseDto> getUserResponseDtoList(List<User> list) {
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
         for (User user : list) {
-            UserResponseDto userResponseDto = new UserResponseDto(user, getResponseOrder(user.getOrders()));
+            UserResponseDto userResponseDto = new UserResponseDto(user, getResponseOrder(user.getOrders()),getRatingDtoList(user.getRatings()));
             userResponseDtoList.add(userResponseDto);
         }
         return userResponseDtoList;
@@ -118,6 +120,14 @@ public class UserControllerTest {
             orderResponseDtoSet.add(new OrderResponseDto(order));
         }
         return orderResponseDtoSet;
+    }
+    public Set<RatingDto> getRatingDtoList(Set<Rating> ratings){
+        Set<RatingDto> ratingDtos=new HashSet<>();
+        for(Rating rating:ratings){
+            ratingDtos.add(new RatingDto(rating.getNumber(),rating.getComment(),rating.getUser().getId()));
+        }
+        return ratingDtos;
+
     }
 }
 

@@ -30,11 +30,10 @@ public class Product {
     @Column(name = "price_in_cents")
     private Integer priceInCents;
     private Set<String> imagesUrl;
-    private Double rating;
     private String brand;
     private String model;
-    private Set<String> colors=new HashSet<>();
-    private Set<Integer> sizes=new HashSet<>();
+    private Set<String> colors = new HashSet<>();
+    private Set<Integer> sizes = new HashSet<>();
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<CategoryEnum> categories = new HashSet<>();
@@ -42,6 +41,8 @@ public class Product {
     private Set<OrderProduct> orderProducts = new HashSet<>();
     @Column(name = "created_at")
     private LocalDate createdAt = LocalDate.now();
+    @OneToMany(mappedBy = "product")
+    private Set<Rating> ratings = new HashSet<>();
 
     public Product(ProductDto productDto) {
         this.brand = productDto.brand();
@@ -52,13 +53,12 @@ public class Product {
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();
-        this.rating = productDto.rating();
-        this.sizes=productDto.sizes();
+        this.sizes = productDto.sizes();
     }
 
 
-    public Product(String id,ProductDto productDto) {
-        this.id=id;
+    public Product(String id, ProductDto productDto) {
+        this.id = id;
         this.brand = productDto.brand();
         this.categories = productDto.categories();
         this.colors = productDto.colors();
@@ -67,7 +67,6 @@ public class Product {
         this.name = productDto.name();
         this.model = productDto.model();
         this.priceInCents = productDto.priceInCents();
-        this.rating = productDto.rating();
-        this.sizes=productDto.sizes();
+        this.sizes = productDto.sizes();
     }
 }
