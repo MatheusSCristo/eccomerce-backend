@@ -30,7 +30,6 @@ public class OrderResponseDto {
     private List<OrderProductResponseDto> orderProduct = new ArrayList<>();
     private PaymentResponseDto payment;
     private BillingDetailsResponseDto billingDetails;
-    private Set<RatingDto> ratings = new HashSet<>();
 
     public OrderResponseDto(Order order) {
         List<OrderProductResponseDto> orderProductResponseDtoList = new ArrayList<>();
@@ -45,16 +44,8 @@ public class OrderResponseDto {
         this.totalInCents = order.getTotalInCents();
         this.payment = order.getPayment() != null ? new PaymentResponseDto(order.getPayment()) : null;
         this.billingDetails = order.getBillingDetails() != null ? new BillingDetailsResponseDto(order.getBillingDetails()) : null;
-        this.ratings = getRatingDtoList(order.getRatings());
 
     }
 
-    private Set<RatingDto> getRatingDtoList(Set<Rating> ratings) {
-        Set<RatingDto> ratingDtos = new HashSet<>();
-        for (Rating rating : ratings) {
-            ratingDtos.add(new RatingDto(rating.getNumber(), rating.getComment(), rating.getUser().getId(), rating.getOrder().getId(),rating.getProduct().getId()));
-        }
-        return ratingDtos;
 
-    }
 }

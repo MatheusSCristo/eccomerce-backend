@@ -23,15 +23,15 @@ public class Rating {
     private User user;
     private String comment;
     private Integer number;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Order order;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private OrderProduct orderProduct;
 
-    public Rating(RatingDto ratingDto,User user,Product product,Order order){
+    public Rating(RatingDto ratingDto,User user,Product product,OrderProduct orderProduct){
         this.user=user;
         this.product=product;
         this.comment=ratingDto.comment();
         this.number=ratingDto.rating();
-        this.order=order;
+        this.orderProduct=orderProduct;
     }
 
 }

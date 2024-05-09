@@ -49,8 +49,7 @@ public class ProductResponseDto {
     private Set<RatingDto> getRatingDtoList(Set<Rating> ratings){
         Set<RatingDto> ratingDtos=new HashSet<>();
         for(Rating rating:ratings){
-            ratingDtos.add(new RatingDto(rating.getNumber(), rating.getComment(), rating.getUser().getId(), rating.getOrder().getId(),rating.getProduct().getId()));
-
+            ratingDtos.add(new RatingDto(rating.getNumber(), rating.getComment(), rating.getUser().getId(), rating.getOrderProduct().getId(),rating.getProduct().getId()));
         }
         return ratingDtos;
     }

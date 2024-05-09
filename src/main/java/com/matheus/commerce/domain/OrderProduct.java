@@ -26,6 +26,8 @@ public class OrderProduct {
     private Integer quantity;
     private Integer subtotalInCents;
     private Set<String> imagesUrl;
+    @OneToOne(mappedBy = "orderProduct")
+    private Rating rating;
 
     public OrderProduct(OrderProductDto orderProductDTO, Product product,Order order){
         this.product=product;

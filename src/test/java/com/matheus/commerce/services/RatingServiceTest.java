@@ -1,14 +1,8 @@
 package com.matheus.commerce.services;
 
-import com.matheus.commerce.domain.Order;
-import com.matheus.commerce.domain.Product;
-import com.matheus.commerce.domain.Rating;
-import com.matheus.commerce.domain.User;
+import com.matheus.commerce.domain.*;
 import com.matheus.commerce.dto.Rating.RatingDto;
-import com.matheus.commerce.repository.OrderRepository;
-import com.matheus.commerce.repository.ProductRepository;
-import com.matheus.commerce.repository.RatingRepository;
-import com.matheus.commerce.repository.UserRepository;
+import com.matheus.commerce.repository.*;
 import com.matheus.commerce.service.RatingService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +25,7 @@ public class RatingServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private OrderRepository orderRepository;
+    private OrderProductRepository orderProductRepository;
 
     @Mock
     private RatingRepository ratingRepository;
@@ -40,7 +34,7 @@ public class RatingServiceTest {
 
     @BeforeEach
     void setup() {
-        ratingService= new RatingService(productRepository,userRepository,ratingRepository,orderRepository);
+        ratingService= new RatingService(productRepository,userRepository,ratingRepository,orderProductRepository);
     }
 
     @Test
@@ -48,12 +42,12 @@ public class RatingServiceTest {
     public void shouldCreateRating(){
         Product product=new Product();
         User user= new User();
-        Order order=new Order();
-        RatingDto ratingDto= new RatingDto(user.getId(),3,"Bom",order.getId(),product.getId());
-        Rating rating=new Rating(ratingDto,user,product,order);
+        OrderProduct orderProduct=new OrderProduct();
+        RatingDto ratingDto= new RatingDto(user.getId(),3,"Bom",orderProduct.getId(),product.getId());
+        Rating rating=new Rating(ratingDto,user,product,orderProduct);
         Mockito.when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        Mockito.when(orderRepository.findById(order.getId())).thenReturn(Optional.of(order));
+        Mockito.when(orderProductRepository.findById(orderProduct.getId())).thenReturn(Optional.of(orderProduct));
         Mockito.doAnswer(invocation -> {
             product.setRatings(Set.of(rating));
             return null;
