@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import com.matheus.commerce.service.RatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody @Valid ProductDto productDto) {
         productService.create(productDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("{id}")
@@ -53,7 +54,7 @@ public class ProductController {
         return ResponseEntity.ok().body(productList);
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}")
     public ResponseEntity<Product> createRating(@PathVariable String id, @RequestBody RatingDto ratingDto){
         Product product= ratingService.createRating(id,ratingDto);
         return ResponseEntity.ok().build();

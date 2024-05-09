@@ -12,12 +12,14 @@ import com.matheus.commerce.repository.OrderRepository;
 import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.repository.RatingRepository;
 import com.matheus.commerce.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class RatingService {
 
 

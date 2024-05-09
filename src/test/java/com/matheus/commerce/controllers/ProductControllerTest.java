@@ -3,7 +3,12 @@ package com.matheus.commerce.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matheus.commerce.controller.OrderController;
 import com.matheus.commerce.controller.ProductController;
+import com.matheus.commerce.domain.Order;
+import com.matheus.commerce.domain.OrderProduct;
 import com.matheus.commerce.domain.Product;
+import com.matheus.commerce.domain.User;
+import com.matheus.commerce.dto.Rating.RatingDto;
+import com.matheus.commerce.dto.orderProduct.OrderProductDto;
 import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.enums.CategoryEnum;
 import com.matheus.commerce.enums.OrderStatus;
@@ -68,13 +73,13 @@ public class ProductControllerTest {
 
     private ProductDto productDto1;
     private ProductDto productDto2;
-    Product product1 ;
-    Product product2 ;
+    Product product1;
+    Product product2;
 
     @BeforeEach
     void setup() {
-        product2 = new Product(new ProductDto("Headphone", "Great", 60000, Set.of(""), 4.5, "Multilaser", "P300", Set.of("Black"), Set.of(CategoryEnum.casual, CategoryEnum.kids, CategoryEnum.fashion),Set.of(32,33,35)));
-        product1 = new Product(new ProductDto("Veja", "Limpador", 3000, Set.of(""), 3.7, "Veja", "Veja",  Set.of("Blue"), Set.of(CategoryEnum.casual),Set.of(32,33,35)));
+        product2 = new Product(new ProductDto("Headphone", "Great", 60000, Set.of(""), 4.5, "Multilaser", "P300", Set.of("Black"), Set.of(CategoryEnum.casual, CategoryEnum.kids, CategoryEnum.fashion), Set.of(32, 33, 35)));
+        product1 = new Product(new ProductDto("Veja", "Limpador", 3000, Set.of(""), 3.7, "Veja", "Veja", Set.of("Blue"), Set.of(CategoryEnum.casual), Set.of(32, 33, 35)));
         product1.setId("1");
         product2.setId("2");
     }
@@ -103,5 +108,31 @@ public class ProductControllerTest {
         response.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(productList.size())));
         response.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(product2.getId()));
         response.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(product2.getName()));
+    }
+
+    @Test
+    @DisplayName("Should create a product")
+    public void shouldCreateProduct() throws Exception {
+        User user = new User();
+        Order order = new Order();
+        OrderProduct orderProduct = new OrderProduct(new OrderProductDto(product1.getId(), 3), product1, order);
+        order.setOrderProduct(Set.of(orderProduct));
+        RatingDto ratingDto = new RatingDto(user.getId(), 3, "Gostei!", order.getId(), product1.getId());
+        Mockito.when(ratingService.createRating(product1.getId(), ratingDto)).thenReturn(product1);
+        ResultActions response = mockMvc.perform(post("/products/" + product1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(ratingDto)));
+        response.andExpect(MockMvcResultMatchers.status().is(200));
+
+    }
+    @Test
+    @DisplayName("Should create a product")
+    public void shouldCreateRating() throws Exception {
+        ProductDto productDto=new ProductDto("Headphone", "Great", 60000, Set.of(""), 4.5, "Multilaser", "P300", Set.of("Black"), Set.of(CategoryEnum.casual, CategoryEnum.kids, CategoryEnum.fashion), Set.of(32, 33, 35));
+        ResultActions response = mockMvc.perform(post("/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(productDto)));
+        response.andExpect(MockMvcResultMatchers.status().is(201));
+
     }
 }
