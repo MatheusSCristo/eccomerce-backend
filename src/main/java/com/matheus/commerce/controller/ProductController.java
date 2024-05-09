@@ -9,6 +9,7 @@ import com.matheus.commerce.service.ProductService;
 
 import javax.validation.Valid;
 
+import com.matheus.commerce.service.RatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,10 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private RatingService ratingService;
+
     @GetMapping
     public ResponseEntity<Set<ProductResponseDto>> findAll() {
         List<Product> productList = productService.findAll();
@@ -50,7 +55,7 @@ public class ProductController {
 
     @PatchMapping("{id}")
     public ResponseEntity<Product> createRating(@PathVariable String id, @RequestBody RatingDto ratingDto){
-        Product product= productService.createRating(id,ratingDto);
+        Product product= ratingService.createRating(id,ratingDto);
         return ResponseEntity.ok().build();
     }
 

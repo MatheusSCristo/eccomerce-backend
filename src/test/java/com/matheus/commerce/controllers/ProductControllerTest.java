@@ -11,12 +11,14 @@ import com.matheus.commerce.infra.security.JwtAuthFilter;
 import com.matheus.commerce.infra.security.JwtService;
 import com.matheus.commerce.service.OrderService;
 import com.matheus.commerce.service.ProductService;
+import com.matheus.commerce.service.RatingService;
 import com.matheus.commerce.service.UserDetailsImp;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class ProductControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private RatingService ratingService;
 
     @MockBean
     private ProductService productService;

@@ -19,16 +19,19 @@ public class Rating {
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private String comment;
     private Integer number;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Order order;
 
-    public Rating(RatingDto ratingDto,User user,Product product){
+    public Rating(RatingDto ratingDto,User user,Product product,Order order){
         this.user=user;
         this.product=product;
         this.comment=ratingDto.comment();
         this.number=ratingDto.rating();
+        this.order=order;
     }
 
 }

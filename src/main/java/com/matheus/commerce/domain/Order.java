@@ -40,6 +40,8 @@ public class Order {
     @JoinColumn(name = "billing_id")
     private BillingDetails billingDetails;
     private Integer shippingFeeInCents;
+    @OneToMany(mappedBy = "order")
+    private Set<Rating> ratings=new HashSet<>();
 
     public Order(User user) {
         this.user = user;

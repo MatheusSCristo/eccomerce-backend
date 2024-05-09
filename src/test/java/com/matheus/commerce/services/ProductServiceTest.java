@@ -8,6 +8,7 @@ import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.repository.RatingRepository;
 import com.matheus.commerce.repository.UserRepository;
 import com.matheus.commerce.service.ProductService;
+import com.matheus.commerce.service.RatingService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +39,7 @@ public class ProductServiceTest {
 
     @BeforeEach
     void setup() {
-        productService = new ProductService(productRepository,userRepository,ratingRepository);
+        productService = new ProductService(productRepository);
     }
 
     @Test

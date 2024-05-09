@@ -1,11 +1,13 @@
 package com.matheus.commerce.service;
 
+import com.matheus.commerce.domain.Order;
 import com.matheus.commerce.domain.Product;
 import com.matheus.commerce.domain.Rating;
 import com.matheus.commerce.domain.User;
 import com.matheus.commerce.dto.Rating.RatingDto;
 import com.matheus.commerce.dto.product.ProductDto;
 import com.matheus.commerce.infra.exceptions.ProductNotFoundException;
+import com.matheus.commerce.infra.exceptions.UserNotFoundException;
 import com.matheus.commerce.repository.ProductRepository;
 import com.matheus.commerce.repository.RatingRepository;
 import com.matheus.commerce.repository.UserRepository;
@@ -23,12 +25,6 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RatingRepository ratingRepository;
 
     public List<Product> findAll() {
         return productRepository.findAll();
@@ -48,14 +44,5 @@ public class ProductService {
         return findAll();
     }
 
-    public Product createRating(String productId,RatingDto ratingDto){
-        Optional<Product> optionalProduct= productRepository.findById(productId);
-        Optional<User> optionalUser=userRepository.findById(ratingDto.userId());
-        if(optionalProduct.isEmpty() || optionalUser.isEmpty()) throw new ProductNotFoundException();
-        Product product= optionalProduct.get();
-        User user = optionalUser.get();
-        Rating rating= new Rating(ratingDto,user,product);
-        ratingRepository.save(rating);
-        return product;
-    }
+
 }
