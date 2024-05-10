@@ -25,7 +25,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    @Lob
+    @Column(length=10485760)
     private String description;
     @Column(name = "price_in_cents")
     private Integer priceInCents;
