@@ -25,8 +25,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
-
     @PostMapping(value ="/register",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserAccessResponseDto> register(@RequestBody @Valid UserCreateDto userCreateDto) {
         return ResponseEntity.ok(authService.register(userCreateDto));

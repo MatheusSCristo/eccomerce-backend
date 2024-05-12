@@ -52,7 +52,7 @@ public class User implements UserDetails {
         this.name = userCreateDto.name();
         this.lastName = userCreateDto.lastName();
         this.birthDate = userCreateDto.birthDate();
-        this.email = userCreateDto.email();
+        this.email = userCreateDto.email().toLowerCase();
         this.password = encryptedPassword;
         this.cpf = userCreateDto.cpf();
         this.createdAt = LocalDate.now();

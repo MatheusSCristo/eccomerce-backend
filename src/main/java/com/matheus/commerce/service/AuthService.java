@@ -40,7 +40,7 @@ public class AuthService {
 
 
     public UserAccessResponseDto register(UserCreateDto userCreateDto) {
-        Optional<User> userOptional = userRepository.findByEmail(userCreateDto.email());
+        Optional<User> userOptional = userRepository.findByEmail(userCreateDto.email().toLowerCase());
         if (userOptional.isPresent()) {
             throw new EmailAlreadyRegisteredException();
         }
@@ -55,9 +55,9 @@ public class AuthService {
     public UserAccessResponseDto authenticate(UserLoginDto userLoginDto) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userLoginDto.email(), userLoginDto.password())
+                    new UsernamePasswordAuthenticationToken(userLoginDto.email().toLowerCase(), userLoginDto.password())
             );
-            User user = (userRepository.findByEmail(userLoginDto.email()).orElseThrow(UserNotFoundException::new));
+            User user = (userRepository.findByEmail(userLoginDto.email().toLowerCase()).orElseThrow(UserNotFoundException::new));
             String token = jwtService.generateToken(user);
             return new UserAccessResponseDto(user, getResponseOrder(user.getOrders()), token);
         } catch (InternalAuthenticationServiceException exception) {
