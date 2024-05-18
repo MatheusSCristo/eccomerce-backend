@@ -1,5 +1,7 @@
 # API de Comércio Eletrônico
 Esta API de comércio eletrônico oferece funcionalidades para gerenciar produtos, pedidos e usuários em uma plataforma de comércio eletrônico.
+- FrontEnd: https://github.com/MatheusSCristo/ecommerce-front
+- Deploy: https://shopplus-pi.vercel.app/
 ## Outros recursos
 ### Gerenciamento de Usuários Avançado 
 - Além do registro e autenticação de usuários, a API suporta confirmação de email ao registrar
